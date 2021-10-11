@@ -1,0 +1,52 @@
+=========
+Changelog
+=========
+v0.7 GloomyGoose
+1-  fixed log function, errant back slash in the directory
+2-  fixed spelling mistakes in the code comments
+3-  simplified the TimeString variable - hh:mm:ss' on 'dd-MMM-yyyy
+4-  log function now hides and locks it after writing in t0he new log data
+5-  added user selectable search engines Google/Bing/Quickbase
+6-  added user selectable web browsers Chrome/Firefox/Edge
+7-  added global variables for all the search engines which will make updating much easier
+8-  added Exit code to prevent app from running endlessly
+9-  added spaces to the variables
+10- added an setting ini file to store user data for easier variable management and to keep settings after program is closed
+11- changed file names for easier readablilty
+12- added appdata to the settings ini
+13- added userdata to the setting ini
+14- added a Windows Traymenu so users can enter their browser and search engine preferences
+15- tray menu now only shows you the browsers you have installed.
+16- Activation process added
+17- 3CX Windows App intergration improved, 
+
+
+v0.6 FanaticalFerret
+1-  added a calculation to determine if the call is internal or external.
+2-  internal calls no longer trigger the web search function, they just log the call.
+3-  cleaned up the search applets boot code, this has increased app responisveness significantly
+
+v0.5 EagerEagle
+1-  added a hidden duplicate of the log just incase users try to manipulate the log files.
+2-  simplified the log function and added global varaibles to it to reduce duplicate variables inside of functions
+3-  icon made from the logo file, added file to media folder
+
+
+v0.4 DancingDragonfly
+1-  added a README file for new users to refer to.
+2-  added a logging file to keep track of who's calling and the date of the call.
+
+
+v0.3 CuriousCheetah
+1-  functions are now split away into a seperated file to keep the search applet as light wieght as possible
+2-  logo finalised and added to the media folder
+
+
+v0.2 BraveBadger
+1-  simplified the web search function
+2-  made common functions to reduce dupelicated processes
+
+
+v0.1 AgelessAlbatross
+1-  applet can now catch and store Windows Launch Parameters from 3CX windows app
+2-  a basic google search is run using the phone number passed from the 3CX WLP
