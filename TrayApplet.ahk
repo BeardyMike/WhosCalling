@@ -10,82 +10,67 @@ SetWorkingDir %A_ScriptDir%                                                     
 ; =================================== ;
 ; = Variable check and data loading = ;
 ; =================================== ;
-SplashImage, media\Splash.png, B
+SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
 
 Process, Close, 3CXWin8Phone.exe
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
 IniRead, ActivatedStatus, data\settings.ini, appdata, AuthenticationToken
 
-
-; =================== ;
-; = Browser SubMenu = ;
-; =================== ;
-RegRead, vResultChrome, HKEY_CURRENT_USER\Software\Google\Chrome\PreferenceMACs\Default, homepage, 
-if ErrorLevel
-    {
-    
-    }
-else
-    {
-    Menu, BrowserSubMenu, add, Chrome, ; if Chrome is installed, this registry check will not give an error code, and Chrome will be added to the menu
-    }
-
-
-RegRead, vResultFireFox, HKEY_CURRENT_USER\Software\Mozilla\Firefox\Default Browser Agent, C:\Program Files\Mozilla Firefox|Installed
-if ErrorLevel
-    {
-
-    }
-else
-    {
-    Menu, BrowserSubMenu, add, FireFox, ; if Firefox is installed, this registry check will not give an error code, and Firefox will be added to the menu
-    }
-
-
-Menu, BrowserSubMenu, add, Edge,
-
-; ================== ;
-; = Engine SubMenu = ;
-; ================== ;
-Menu, EngineSubMenu, add, Google,
-Menu, EngineSubMenu, add, Bing,
-Menu, EngineSubMenu, add, QuickBase,
+if ActivatedStatus = 1
+{
+SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
+}
+else if ActivatedStatus = 0
+{
+SplashImage, media\Not Activated.png, B                                                     ; loads the Not Activated splash image, it is turned off after the tray menu and other items have loaded.
+}
 
 ; ============= ;
 ; = Tray Menu = ;
 ; ============= ;
 
-Menu, Tray, Icon, media\Logo.ico, 1
-Menu, Tray, NoStandard,
-Menu, Tray, add, Preferred Browser, :BrowserSubMenu
-Menu, Tray, add, Preferred Search Engine, :EngineSubMenu
-Menu, Tray, Add ; separator
-Menu, Tray, Add, About
-Menu, Tray, Add ; separator
-Menu, Tray, Add, Activated
-Menu, Tray, Add, Exit
+Menu, Tray, Icon, media\Logo.ico, 1                             ; adds the logo
+Menu, Tray, NoStandard,                                         ; removes the standard AHK menu items
+Menu, Tray, Add, Activated                                      ; adds the activated menu item
+Menu, Tray, Add                                                 ; separator
+Menu, Tray, Add, About                                          ; adds the about menu item
+Menu, Tray, Add                                                 ; separator
+Menu, Tray, Add, Settings                                       ; adds the Settings menu item
+Menu, Tray, Add, Exit                                           ; add an exit button
 
+
+; ===================== ;
+; = Activation Checks = ;
+; ===================== ;
 global ActivatedStatus
 If ActivatedStatus = 0
     Menu, Tray, Default, Activated
 Else
     Menu, Tray, Default, About
-sleep, 2000
+
+
+if ActivatedStatus = 1
+{
+sleep, 500
 SplashImage, Off
+}
+else if ActivatedStatus = 0
+{
+sleep, 3000
+SplashImage, Off
+}
+
+
 TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","False","True")
 TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.ahk</LaunchApplicationExecutablePath>")
 TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
+
 Run, C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe
-; ==================== ;
-; = Activation Check = ;
-; ==================== ;
 
 If ActivatedStatus = 0
     {
         Menu, Tray, Rename, Activated, Not Activated
-        Menu, Tray, Disable, Preferred Browser
-        Menu, Tray, Disable, Preferred Search Engine
         Menu, Tray, Tip , Not Activated
     }
 else
@@ -94,101 +79,17 @@ else
         Menu, Tray, Tip , Whos Calling
 
 
-    }
-; =================== ;
-; = SubMenu Checker = ;
-; =================== ;
-If (BrowserType = "Chrome")
-    {
-    Menu, BrowserSubMenu, Check, Chrome
-    }
-Else if (BrowserType = "FireFox") 
-    {
-    Menu, BrowserSubMenu, Check, FireFox
-    }
-Else if (BrowserType = "Edge") 
-    {
-    Menu, BrowserSubMenu, Check, Edge
-    }
-
-If (SearchEngine = "Google")
-    {
-    Menu, EngineSubMenu, Check, Google
-    Return
-    }
-Else If (SearchEngine = "Bing")
-    {
-    Menu, EngineSubMenu, Check, Bing
-    Return
-    }  
-Else (SearchEngine = "Quickbase")
-    {
-    Menu, EngineSubMenu, Check, Quickbase
-    Return
-    }                       
-
-
-
-; =============================== ;
-; = Search Engine Menu triggers = ;
-; =============================== ;
-Google:
-Menu, EngineSubMenu, Check, Google
-Menu, EngineSubMenu, Uncheck, Bing
-Menu, EngineSubMenu, Uncheck, QuickBase
-IniWrite, Google, data\settings.ini, userdata, userpreferredsearchengine  
+    }          
 return
-
-Bing:
-Menu, EngineSubMenu, Uncheck, Google
-Menu, EngineSubMenu, Check, Bing
-Menu, EngineSubMenu, Uncheck, QuickBase
-IniWrite, Bing, data\settings.ini, userdata, userpreferredsearchengine  
-return
-
-QuickBase:
-Menu, EngineSubMenu, Uncheck, Google
-Menu, EngineSubMenu, Uncheck, Bing
-Menu, EngineSubMenu, Check, QuickBase
-IniWrite, QuickBase, data\settings.ini, userdata, userpreferredsearchengine  
-return
-
-
-; ============================ ;
-; = Web Broser Menu Triggers = ;
-; ============================ ;
-Chrome:
-Menu, BrowserSubMenu, Check, Chrome
-Menu, BrowserSubMenu, Uncheck, FireFox
-Menu, BrowserSubMenu, Uncheck, Edge
-IniWrite, Chrome, data\settings.ini, userdata, userpreferredbrowser  
-return
-
-FireFox:
-Menu, BrowserSubMenu, Uncheck, Chrome
-Menu, BrowserSubMenu, Check, FireFox
-Menu, BrowserSubMenu, Uncheck, Edge
-IniWrite, FireFox, data\settings.ini, userdata, userpreferredbrowser 
-return
-
-Edge:
-Menu, BrowserSubMenu, Uncheck, Chrome
-Menu, BrowserSubMenu, Uncheck, FireFox
-Menu, BrowserSubMenu, Check, Edge
-IniWrite, Edge, data\settings.ini, userdata, userpreferredbrowser 
-return
-
 
 
 ; ============= ;
 ; = About Gui = ;
 ; ============= ;
-
-
 About:
     Gui, 1:Font, s9, Segoe UI
     Gui, 1:Add, Button, x283 y194 w47 h23, &OK
-    Gui, 1:Add, Picture, x113 y2 w120 h120, D:\AHK\SoundM Whos Calling\media\Logo.png
+    Gui, 1:Add, Picture, x113 y2 w120 h120, media\Logo.png
     Gui, 1:Font
     Gui, 1:Font, s20, Lucida Console
     Gui, 1:Add, Text, x59 y126 w232 h39 +0x200, Who's Calling?
@@ -205,48 +106,16 @@ GuiClose:
     Gui, 2:Hide
     return
 
-Startup()
-{
-If (BrowserType = "Chrome")
-    {
-    Menu, BrowserSubMenu, Check, Chrome
-    Return
-    }
-Else if (BrowserType = "FireFox") 
-    {
-    Menu, BrowserSubMenu, Check, FireFox
-    Return
-    }
-Else if (BrowserType = "Edge") 
-    {
-    Menu, BrowserSubMenu, Check, Edge
-    Return
-    }
 
 
-If (SearchEngine = "Google")
-    {
-    Menu, EngineSubMenu, Check, Google
-    Return
-    }
-Else If (SearchEngine = "Bing")
-    {
-    Menu, EngineSubMenu, Check, Bing
-    Return
-    }  
-Else (SearchEngine = "Quickbase")
-    {
-    Menu, EngineSubMenu, Check, Quickbase
-    Return
-    }                       
-}
 
-
+; ================= ;
+; = Activated Gui = ;
+; ================= ;
 Activated:
-
 Gui, 2:-MinimizeBox -MaximizeBox
 Gui, 2:Font, s9, Segoe UI
-Gui, 2:Add, Picture, x64 y0 w60 h60, D:\AHK\SoundM Whos Calling\media\Logo.png
+Gui, 2:Add, Picture, x64 y0 w60 h60, media\Logo.png
 Gui, 2:Font
 Gui, 2:Font, s14, Lucida Console
 Gui, 2:Add, Text, x10 y63 w231 h40 +0x200, Activation Tool
@@ -281,12 +150,15 @@ else
     }
 return
 
-
+Settings:
+run, settings.ahk
+return
 
 ; ================ ;
 ; = Exit Trigger = ;
 ; ================ ;
-^+q:: ; ctrl+shift+q
+
+#+q:: ; win+shift+q
 Exit:
 
     TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","True","False") ; turns off the 3CX intergration

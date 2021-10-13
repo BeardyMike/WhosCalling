@@ -1,6 +1,16 @@
 =========
 Changelog
 =========
+v0.8 HeartyHampster
+1-  Added a new settings menu that replaces the tray menu options for user preferences
+2-  logging can now be enabled and disabled
+3-  splash screen now shows different verion if not activated
+4-  cleaned up the settings.ini
+5-  fixed a bug in the SearchApplet that was stopping it from loading sites correctly
+6-  general performance optimisations from removing duplicate calculations
+7-  changed the TrayApplet exit combo to win + shift + q
+8-  cleaned up the traymenu user preferences options as most are no longer needed
+
 v0.7 GloomyGoose
 1-  fixed log function, errant back slash in the directory
 2-  fixed spelling mistakes in the code comments
@@ -18,7 +28,7 @@ v0.7 GloomyGoose
 14- added a Windows Traymenu so users can enter their browser and search engine preferences
 15- tray menu now only shows you the browsers you have installed.
 16- Activation process added
-17- 3CX Windows App intergration improved, 
+17- 3CX Windows App intergration improved
 
 
 v0.6 FanaticalFerret

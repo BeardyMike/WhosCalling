@@ -4,21 +4,31 @@ googlesearch=https://www.google.co.uk/search?q=                                 
 bingsearch=https://www.bing.co.uk/search?q=                                                 ; Bing Search URL
 quickbasesearch=https://soundmarketing.quickbase.com/db/bp57cf4sy?a=QuickSearch2&srchtxt=   ; add "&exact=false" directly after the variable has been added to url other wise Quickbase will not search properly
 
-
-
 LogWriter(value, location) ; writes log files
     {
-    global TimeString                                                                       ; pulls the TimeString variable into this function for use
-    global log1                                                                             ; pulls the log1 variable into this function for use
-    global log2                                                                             ; pulls the log1 variable into this function for use
-    FileSetAttrib, -R, %log2%,                                                              ; Makes the Hidden Log writeable
-    FileAppend, %location% from %value% at %TimeString%.`n, %log1%,                         ; Writes to the regular log
-    FileAppend, %location% from %value% at %TimeString%.`n, %log2%,                         ; Writes to the hidden log
-    FileSetAttrib, +HR, %log2%,                                                             ; Hides the hidden log and makes it read only
-    Return
+    IniRead, logcalls, data\settings.ini, userdata, logcalls    
+    if (logcalls = "true")
+        {
+        global TimeString                                                                       ; pulls the TimeString variable into this function for use
+        global log1                                                                             ; pulls the log1 variable into this function for use
+        global log2                                                                             ; pulls the log1 variable into this function for use
+        FileSetAttrib, -R, %log2%,                                                              ; Makes the Hidden Log writeable
+        FileAppend, %location% from %value% at %TimeString%.`n, %log1%,                         ; Writes to the regular log
+        FileAppend, %location% from %value% at %TimeString%.`n, %log2%,                         ; Writes to the hidden log
+        FileSetAttrib, +HR, %log2%,                                                             ; Hides the hidden log and makes it read only
+        Return
+        }
+    else if (logcalls = "false")
+        {
+        global TimeString                                                                       ; pulls the TimeString variable into this function for use
+        global log1                                                                             ; pulls the log1 variable into this function for use
+        global log2                                                                             ; pulls the log1 variable into this function for use
+        FileSetAttrib, -R, %log2%,                                                              ; Makes the Hidden Log writeable
+        FileAppend, %location% from %value% at %TimeString%.`n, %log2%,                         ; Writes to the hidden log
+        FileSetAttrib, +HR, %log2%,       
+        return
+        }
     }
-
-
 
 Search(url) ; takes the number and searches the web with it using the users preferred web browser
     {
@@ -39,8 +49,6 @@ Search(url) ; takes the number and searches the web with it using the users pref
         Return
         }
     }
-
-
 
 Chrome(url) ; searches the web with the users preferred search engine in Chrome
     {
@@ -65,8 +73,6 @@ Chrome(url) ; searches the web with the users preferred search engine in Chrome
             }                       
     }
 
-
-
 Firefox(url) ; searches the web with the users preferred search engine in Firefox
     {
     global SearchEngine
@@ -90,8 +96,6 @@ Firefox(url) ; searches the web with the users preferred search engine in Firefo
             }                       
     }
 
-
-
 Edge(url) ; searches the web with the users preferred search engine in Edge
     {
     global SearchEngine
@@ -114,6 +118,3 @@ Edge(url) ; searches the web with the users preferred search engine in Edge
                 Return
             }                       
     }
-
-
-
