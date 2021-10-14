@@ -1,3 +1,4 @@
+; updated for v0.8 HeartyHampster
 log1=logs\Log.txt                                                                           ; Defines the location on the regular log
 log2=logs\HiddenLog.txt                                                                     ; Defines the location on the hidden log
 googlesearch=https://www.google.co.uk/search?q=                                             ; Google Search URL

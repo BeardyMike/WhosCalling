@@ -10,21 +10,21 @@ SetWorkingDir %A_ScriptDir%                                                     
 ; =================================== ;
 ; = Variable check and data loading = ;
 ; =================================== ;
-SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
-
 Process, Close, 3CXWin8Phone.exe
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
 IniRead, ActivatedStatus, data\settings.ini, appdata, AuthenticationToken
 
-if ActivatedStatus = 1
-{
-SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
-}
-else if ActivatedStatus = 0
-{
-SplashImage, media\Not Activated.png, B                                                     ; loads the Not Activated splash image, it is turned off after the tray menu and other items have loaded.
-}
+run, splashscreen\SplashScreen.ahk
+
+; if ActivatedStatus = 1
+; {
+; SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
+; }
+; else if ActivatedStatus = 0
+; {
+; SplashImage, media\Not Activated.png, B                                                     ; loads the Not Activated splash image, it is turned off after the tray menu and other items have loaded.
+; }
 
 ; ============= ;
 ; = Tray Menu = ;
@@ -50,16 +50,16 @@ Else
     Menu, Tray, Default, About
 
 
-if ActivatedStatus = 1
-{
-sleep, 500
-SplashImage, Off
-}
-else if ActivatedStatus = 0
-{
-sleep, 3000
-SplashImage, Off
-}
+; if ActivatedStatus = 1
+; {
+; sleep, 500
+; SplashImage, Off
+; }
+; else if ActivatedStatus = 0
+; {
+; sleep, 3000
+; SplashImage, Off
+; }
 
 
 TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","False","True")

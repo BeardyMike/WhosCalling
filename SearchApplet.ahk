@@ -1,4 +1,5 @@
-﻿; ================
+﻿; updated for v0.8 HeartyHampster
+; ================
 ; = Startup Code =
 ; ================ 
 #NoEnv                                                                                      ; Recommended for performance and compatibility with future AutoHotkey releases.

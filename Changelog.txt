@@ -10,6 +10,7 @@ v0.8 HeartyHampster
 6-  general performance optimisations from removing duplicate calculations
 7-  changed the TrayApplet exit combo to win + shift + q
 8-  cleaned up the traymenu user preferences options as most are no longer needed
+9-  splash video added
 
 v0.7 GloomyGoose
 1-  fixed log function, errant back slash in the directory
