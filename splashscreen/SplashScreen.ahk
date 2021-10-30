@@ -1,4 +1,5 @@
-﻿#NoTrayIcon
+﻿#SingleInstance
+#NoTrayIcon
 file := "media\Logo.mp4"
 Gui, -Caption
 Gui, Add, ActiveX, x0 y0 w700 h500 vWMP, WMPLayer.OCX
