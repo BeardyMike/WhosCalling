@@ -12,4 +12,5 @@ The TrayMenuApplet isn't fussy about where it's stored or launched from, so long
 
 # SMHotKey has been merged into this project
 SMHotKey has been cleaned up and brought into this git, as I use the two for professional purposes. If the featureset grows or requires lots of updates, I may break it out to its own git. But for now, it's a part of WhosCalling.
-![Loading-GIF](https://user-images.githubusercontent.com/42244545/166451602-4490983e-c4c5-475e-ba45-bffb0bd41d40.gif)
+
+![Hotkey splash](https://user-images.githubusercontent.com/42244545/166451751-e3d11029-15fe-4ba8-bcb5-74d8688bfd4d.jpg)
