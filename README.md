@@ -1,4 +1,3 @@
-![demo](https://user-images.githubusercontent.com/42244545/166448295-c029b421-04ae-4844-8bad-eff98040d898.gif)
 # WhosCalling
 Takes the incoming caller number from 3CX and searches it online, using Google, Bing, or QuickBase-CRM.
 Written entirely in AHK, this project fits a very specific needs for my office.

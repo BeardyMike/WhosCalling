@@ -11,7 +11,8 @@ SetWorkingDir %A_ScriptDir%                                                     
 ; ============= 
 internalcall=Internal call
 externalcall=External call
-phonenumber=%1%                                                                             ; The variable is created using the first parameter handed to the script by Windows
+;phonenumber=%1%    																		; The variable is created using the first parameter handed to the script by Windows
+phonenumber=ExampleNumber  																	; Example Number Variable for testing
 FormatTime, TimeString,, hh:mm:ss' on 'dd-MMM-yyyy                                          ; formats the date and time
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser                     ; reads the users preferred browser data
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine               ; reads the users preferred search engine

@@ -10,12 +10,28 @@ SetWorkingDir %A_ScriptDir%                                                     
 ; =================================== ;
 ; = Variable check and data loading = ;
 ; =================================== ;
+
+IfNotExist, C:\ProgramData\3CXPhone for Windows\
+{
+    MsgBox, 4,, 3CXPhone for Windows is not installed, do you want to download it now?
+	IfMsgBox Yes
+    		{
+			Run, chrome.exe https://downloads-global.3cx.com/downloads/3CXPhoneforWindows16.msi
+			ExitFromApp()
+			}
+		else
+			{
+    		ExitFromApp()
+			}
+}
+
+Run, %A_ScriptDir%/SMHotKey/SMHotKey.exe
 Process, Close, 3CXWin8Phone.exe
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
 IniRead, ActivatedStatus, data\settings.ini, appdata, AuthenticationToken
 
-run, splashscreen\SplashScreen.ahk
+run, splashscreen\SplashScreen.exe
 
 ; if ActivatedStatus = 1
 ; {
@@ -62,9 +78,13 @@ Else
 ; }
 
 
-TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","False","True")
-TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.ahk</LaunchApplicationExecutablePath>")
-TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
+; TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","False","True")
+; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.exe</LaunchApplicationExecutablePath>")
+; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchExternalApplication>True</LaunchExternalApplication>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.exe</LaunchApplicationExecutablePath>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
+		TF_RemoveDuplicateLines("File.txt","83","0",1,false)
 
 Run, C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe
 
@@ -151,17 +171,29 @@ else
 return
 
 Settings:
-run, settings.ahk
+run, settings.exe
 return
 
 ; ================ ;
 ; = Exit Trigger = ;
 ; ================ ;
 
-#+q:: ; win+shift+q
-Exit:
+ExitFromApp() ;
+{
+	Process, Close, SMHotKey.exe
+	Process, Close, 3CXWin8Phone.exe
+; TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","True","False") ; turns off the 3CX intergration
+; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath> </LaunchApplicationExecutablePath>")
+; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters> </LaunchApplicationParameters>")
 
-    TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","True","False") ; turns off the 3CX intergration
-    TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath></LaunchApplicationExecutablePath>")
-    TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters></LaunchApplicationParameters>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchExternalApplication>False</LaunchExternalApplication>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationExecutablePath></LaunchApplicationExecutablePath>")
+		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationParameters></LaunchApplicationParameters>")
+		TF_RemoveDuplicateLines("File.txt","83","0",1,false)
+	Run, C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe
     ExitApp, [ ExitCode]
+}
+
+#+q:: ; win+shift+q
+exit:
+ExitFromApp()
