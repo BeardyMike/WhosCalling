@@ -1,134 +1,189 @@
+﻿#SingleInstance Force
+#Persistent
 #NoEnv
-#NoTrayIcon
 SetWorkingDir %A_ScriptDir%
-
-IniRead, ActivatedStatus, data\settings.ini, appdata, AuthenticationToken
-IniRead, engine, data\settings.ini, userdata, userpreferredsearchengine
-IniRead, browser, data\settings.ini, userdata, userpreferredbrowser
-IniRead, logcalls, data\settings.ini, userdata, logcalls
-IniRead, betamode, data\settings.ini, userdata, betamode
+SetBatchLines -1
+#NoTrayIcon
 
 
-RegRead, vResultChrome, HKEY_CURRENT_USER\Software\Google\Chrome\PreferenceMACs\Default, homepage,                                          ; if Chrome is installed, this registry check will not give an error code, and Chrome will be added to the menu
-if ErrorLevel
-    {
-        Gui Add, Radio, group x27 y24 w75 h23 gChrome disabled, Chrome
-    }
-else
-    {    
+; Initial Variables
+save = 1
 
-if (browser = "Chrome")
-{
-    Gui Add, Radio, group x27 y24 w75 h23 gChrome checked, Chrome
-}
-else
-{
-    Gui Add, Radio, group x27 y24 w75 h23 gChrome, Chrome
-}                                                
-    }
-RegRead, vResultFireFox, HKEY_CURRENT_USER\Software\Mozilla\Firefox\Default Browser Agent, C:\Program Files\Mozilla Firefox|Installed       ; if Firefox is installed, this registry check will not give an error code, and Firefox will be added to the menu
-if ErrorLevel
-    {
-            Gui Add, Radio, x27 y48 w84 h23 gFireFox disabled, FireFox
-    }
-else
-    {
-if (browser = "FireFox")
-{
-    Gui Add, Radio, x27 y48 w84 h23 gFireFox checked, FireFox
-}
-else
-{
-    Gui Add, Radio, x27 y48 w84 h23 gFireFox, FireFox
-}
-
-}
-
-if (browser = "Edge")                                                                                                                       ; Edge IS installed, so a registry check isnt needed
-{
-    Gui Add, Radio, x27 y72 w84 h23 gEdge checked, Edge
-}
-else
-{
-    Gui Add, Radio, x27 y72 w84 h23 gEdge, Edge
-}
+; GUI Assets Variables
+googlegrey = media\gui assets\Google Grey.png
+googlecolour = media\gui assets\Google Colour.png
+firefoxgrey = media\gui assets\Firefox Grey.png
+firefoxcolour = media\gui assets\Firefox Colour.png
+edgegrey = media\gui assets\Edge GRey.png
+edgecolour = media\gui assets\Edge Colour.png
+chromegrey = media\gui assets\Chrome Grey.png
+chromecolour = media\gui assets\Chome Colour.png
+binggrey = media\gui assets\Bing Grey.png
+bingcolour = media\gui assets\Bing Colour.png
+quickbasegrey = media\gui assets\Quickbase Grey.png
+quickbasecolour = media\gui assets\QuickBase Colour.png
+closebutton = media\gui assets\Close Button.png
+savehover = media\gui assets\Save hover.png
+savenohover = media\gui assets\Save no hover.png
 
 
+; Settings GUI
+Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption 										;	removes system buttons, adds always-on-top
+Gui Add, Picture, x0 y0 w1000 h700, D:\AHK\SoundM Whos Calling\Gui Assets\BG.png								;	This is the main background image
+Gui Add, Picture, gGoogle x654 y159 w94 h96 +BackgroundTrans, %googlegrey%										;	this is the grey 	Google 		button
+Gui Add, Picture, vGoogle x654 y159 w94 h96 +BackgroundTrans, %googlecolour%									;	this is the colour 	Google 		button
+Gui Add, Picture, gFireFox x266 y272 w95 h100 +BackgroundTrans, %firefoxgrey%									;	this is the grey 	FireFox 	button
+Gui Add, Picture, vFireFox x266 y272 w95 h100 +BackgroundTrans, %firefoxcolour%									;	this is the colour 	FireFox 	button
+Gui Add, Picture, gEdge x266 y388 w96 h96 +BackgroundTrans, %edgegrey%											;	this is the grey 	Edge 		button
+Gui Add, Picture, vEdge x266 y388 w96 h96 +BackgroundTrans, %edgecolour%										;	this is the colour 	Edge		button
+Gui Add, Picture, gChrome x266 y159 w96 h96 +BackgroundTrans, %chromegrey%										;	this is the grey 	Chrome 		button
+Gui Add, Picture, vChrome x266 y159 w96 h96 +BackgroundTrans, %chromecolour%									;	this is the colour 	Chrome 		button
+Gui Add, Picture, gBing x654 y272 w64 h96 +BackgroundTrans, %binggrey%											;	this is the grey 	Bing 		button
+Gui Add, Picture, vBing x654 y272 w64 h96 +BackgroundTrans, %bingcolour%										;	this is the colour 	Bing 		button
+Gui Add, Picture, gQuickbase x654 y388 w72 h97 +BackgroundTrans, %quickbasegrey%								;	this is the grey 	QuickBase 	button
+Gui Add, Picture, vQuickBase x654 y388 w72 h97 +BackgroundTrans, %quickbasecolour%								;	this is the colour 	QuickBase 	button
+Gui Add, Picture, gClose hwndMyclose vMyclose x960 y23 w17 h17 +BackgroundTrans, %closebutton%					;	this is the normal	close 		button
+Gui Add, Picture, gSave hwndMysave vMysave x456 y649 w86 h33, %savehover%										;	this is the grey 	save 		button
+Gui Add, Picture, hwndMynosave vMynosave x456 y649 w86 h33, %savenohover%										;	this is the colour 	save		button
+Gui Add, Picture, x29 y654 w33 h23 +BackgroundTrans, D:\AHK\SoundM Whos Calling\Gui Assets\hotkey logo.png		;	this is the logo
+Gui +LastFound
+WinSet, Region, 0-0 w1000 h700 R30-30, 
+OnMessage(0x201, "WM_LBUTTONDOWN")
 
+; this sets up the buttons when the GUI first loads
+IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
+IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
+if  ( BrowserType = "Chrome" )
+   {
+     GuiControl, show, Chrome,
+   } else 	{
+     GuiControl, hide, Chrome,
+			}
 
+if  ( BrowserType = "FireFox" )
+   {
+     GuiControl, show, FireFox,
+   } else 	{
+     GuiControl, hide, FireFox,
+			}
 
+if  ( BrowserType = "Edge" )
+   {
+     GuiControl, show, Edge,
+   } else 	{
+     GuiControl, hide, Edge,
+			}
 
-If ActivatedStatus > 0
-Gui Add, StatusBar,,    Activation Status:   License Key Verified
-else
-Gui Add, StatusBar,,    Activation Status:   Not Licensed
-Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop
-Gui Font, s9, Segoe UI
-Gui Add, Button, x183 y109 w80 h23, &Done
-Gui Add, GroupBox, x135 y1 w127 h102, Preferred Engine
-Gui Add, GroupBox, x8 y1 w119 h103, Preferred Browser
+if  ( SearchEngine = "Google" )
+   {
+     GuiControl, show, Google,
+   } else 	{
+     GuiControl, hide, Google,
+			}
 
+if  ( SearchEngine = "Bing" )
+   {
+     GuiControl, show, Bing,
+   } else 	{
+     GuiControl, hide, Bing,
+			}
 
+if  ( SearchEngine = "Quickbase" )
+   {
+     GuiControl, show, QuickBase,
+   } else 	{
+     GuiControl, hide, QuickBase,
+			}
 
-
-if (engine = "Google")
-{
-Gui Add, Radio, group x163 y24 w75 h23 gGoogle checked, Google
-}
-else
-{
-    Gui Add, Radio, group x163 y24 w75 h23 gGoogle, Google
-}
-
-if (engine = "Bing")
-{
-Gui Add, Radio, x163 y48 w75 h23 gBing checked, Bing
-}
-else
-{
-Gui Add, Radio, x163 y48 w75 h23 gBing, Bing
-}
-
-if (engine = "QuickBase")
-{
-Gui Add, Radio, x163 y72 w75 h23 gQuickbase checked, QuickBase
-}
-else
-{
-Gui Add, Radio, x163 y72 w75 h23 gQuickbase, QuickBase
-}
-
-if (logcalls = "true")
-{
-Gui Add, CheckBox, x12 y110 w69 h23 gLogCalls checked, Log calls
-}
-else
-{
-Gui Add, CheckBox, x12 y110 w69 h23 gLogCalls, Log calls
-}
-
-if (betamode = "true")
-{
-Gui Add, CheckBox, x88 y110 w88 h23 gBetaMode checked, Beta mode
-}
-else
-{
-Gui Add, CheckBox, x88 y110 w88 h23 gBetaMode, Beta mode
-}
-
-Gui Show, w268 h162, Whos Calling Settings
-
-
-
+Gui Show, w1000 h700, 
+SetTimer, MouseOverPicture, 1
+SetTimer, GuiController, 1
 return
 
 
 
-ButtonDone:
-GuiEscape:
-GuiClose:
-    ExitApp
 
+
+MouseOverPicture:
+Gui, Submit, NoHide
+MouseGetPos,,,,id, 
+
+if ( id = "Static16")
+{
+save = 1  
+}
+
+if ( id = "Static1")
+{
+save = 0  
+}
+return
+
+
+GuiController: 																									; This updates the GUI Buttons based on the selected settings
+IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
+IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
+if  ( save = "1" )
+   {
+     GuiControl, show, Mynosave,
+   } else 	{
+     GuiControl, hide, Mynosave,
+			}
+if  ( close = "1" )
+   {
+     GuiControl, show, Mynoclose,
+   } else 	{
+     GuiControl, hide, Mynoclose,
+			}
+			
+if  ( BrowserType = "Chrome" )
+   {
+     GuiControl, show, Chrome,
+   } else 	{
+     GuiControl, hide, Chrome,
+			}
+
+if  ( BrowserType = "FireFox" )
+   {
+     GuiControl, show, FireFox,
+   } else 	{
+     GuiControl, hide, FireFox,
+			}
+
+if  ( BrowserType = "Edge" )
+   {
+     GuiControl, show, Edge,
+   } else 	{
+     GuiControl, hide, Edge,
+			}
+
+if  ( SearchEngine = "Google" )
+   {
+     GuiControl, show, Google,
+   } else 	{
+     GuiControl, hide, Google,
+			}
+
+if  ( SearchEngine = "Bing" )
+   {
+     GuiControl, show, Bing,
+   } else 	{
+     GuiControl, hide, Bing,
+			}
+
+if  ( SearchEngine = "Quickbase" )
+   {
+     GuiControl, show, QuickBase,
+   } else 	{
+     GuiControl, hide, QuickBase,
+			}
+return
+
+
+WM_LBUTTONDOWN(wParam, lParam, msg, hwnd) 		; hold left click to move window
+{
+   PostMessage 0xA1, 2
+}
 
 Chrome:
 IniWrite, Chrome, data\settings.ini, userdata, userpreferredbrowser
@@ -154,19 +209,37 @@ Quickbase:
 IniWrite, Quickbase, data\settings.ini, userdata, userpreferredsearchengine
 return
 
-LogCalls:
-IniRead, logcalls, data\settings.ini, userdata, logcalls
-if (logcalls = "true")
-IniWrite, false, data\settings.ini, userdata, logcalls
-else if (logcalls = "false")
-IniWrite, true, data\settings.ini, userdata, logcalls
-return
+Close(CtrlHwnd, GuiEvent, EventInfo, ErrLevel := "") {
+ExitApp
+}
 
-BetaMode:
-IniRead, betamode, data\settings.ini, userdata, betamode
-if (betamode = "true")
-IniWrite, false, data\settings.ini, userdata, betamode
-else if (betamode = "false")
-IniWrite, true, data\settings.ini, userdata, betamode
-return
-return
+Save(CtrlHwnd, GuiEvent, EventInfo, ErrLevel := "") {
+ExitApp
+}
+
+GuiSize(GuiHwnd, EventInfo, Width, Height) {
+    If (A_EventInfo == 1) {
+        Return
+    }
+
+}
+
+GuiEscape(GuiHwnd) {
+    ExitApp
+}
+
+GuiClose(GuiHwnd) {
+    ExitApp
+}
+
+OnWM_MOUSEMOVE(wParam, lParam, msg, hWnd) {
+
+}
+
+OnWM_LBUTTONDOWN(wParam, lParam, msg, hWnd) {
+
+}
+
+
+
+
