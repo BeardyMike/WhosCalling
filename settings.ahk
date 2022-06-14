@@ -27,8 +27,10 @@ savehover = media\gui assets\Save hover.png
 savenohover = media\gui assets\Save no hover.png
 
 
+
+
 ; Settings GUI
-Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop  -Caption 										;	removes system buttons, adds always-on-top
+Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop  -Caption 											;	removes system buttons, adds always-on-top
 Gui Add, Picture, x0 y0 w1000 h700, media\gui assets\BG.png														;	This is the main background image
 Gui Add, Picture, gGoogle x654 y159 w94 h96 +BackgroundTrans, %googlegrey%										;	this is the grey 	Google 		button
 Gui Add, Picture, vGoogle x654 y159 w94 h96 +BackgroundTrans, %googlecolour%									;	this is the colour 	Google 		button
@@ -103,17 +105,42 @@ return
 
 
 
+; gLabel commands from the gui
+Chrome:
+IniWrite, Chrome, data\settings.ini, userdata, userpreferredbrowser
+return
 
+FireFox:
+IniWrite, FireFox, data\settings.ini, userdata, userpreferredbrowser
+return
+
+Edge:
+IniWrite, Edge, data\settings.ini, userdata, userpreferredbrowser
+return
+
+Google:
+IniWrite, Google, data\settings.ini, userdata, userpreferredsearchengine
+return
+
+Bing:
+IniWrite, Bing, data\settings.ini, userdata, userpreferredsearchengine
+return
+
+Quickbase:
+IniWrite, Quickbase, data\settings.ini, userdata, userpreferredsearchengine
+return
+
+
+
+
+;reads if the mouse is hovering over the save button and changes a variable to 1 or 0
 MouseOverPicture:
 Gui, Submit, NoHide
 MouseGetPos,,,,id, 
-
-
 if ( id = "Static15")
 {
 save = 1  
 }
-
 if ( id = "Static1")
 {
 save = 0  
@@ -121,7 +148,10 @@ save = 0
 return
 
 
-GuiController: 																									; This updates the GUI Buttons based on the selected settings
+
+
+; This updates the GUI Buttons based on the selected settings
+GuiController: 
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
 if  ( save = "1" )
@@ -130,13 +160,6 @@ if  ( save = "1" )
    } else 	{
      GuiControl, hide, Mynosave,
 			}
-if  ( close = "1" )
-   {
-     GuiControl, show, Mynoclose,
-   } else 	{
-     GuiControl, hide, Mynoclose,
-			}
-			
 if  ( BrowserType = "Chrome" )
    {
      GuiControl, show, Chrome,
@@ -181,34 +204,20 @@ if  ( SearchEngine = "Quickbase" )
 return
 
 
-WM_LBUTTONDOWN(wParam, lParam, msg, hwnd) 		; hold left click to move window
+
+
+
+
+; hold left click to move window
+WM_LBUTTONDOWN(wParam, lParam, msg, hwnd) 		
 {
    PostMessage 0xA1, 2
 }
 
-Chrome:
-IniWrite, Chrome, data\settings.ini, userdata, userpreferredbrowser
-return
 
-FireFox:
-IniWrite, FireFox, data\settings.ini, userdata, userpreferredbrowser
-return
 
-Edge:
-IniWrite, Edge, data\settings.ini, userdata, userpreferredbrowser
-return
 
-Google:
-IniWrite, Google, data\settings.ini, userdata, userpreferredsearchengine
-return
 
-Bing:
-IniWrite, Bing, data\settings.ini, userdata, userpreferredsearchengine
-return
-
-Quickbase:
-IniWrite, Quickbase, data\settings.ini, userdata, userpreferredsearchengine
-return
 
 Close(CtrlHwnd, GuiEvent, EventInfo, ErrLevel := "") {
 ExitApp
