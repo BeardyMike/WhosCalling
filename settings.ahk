@@ -3,7 +3,7 @@
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-#NoTrayIcon
+; #NoTrayIcon
 
 
 ; Initial Variables
@@ -28,8 +28,8 @@ savenohover = media\gui assets\Save no hover.png
 
 
 ; Settings GUI
-Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop +ToolWindow -Caption 										;	removes system buttons, adds always-on-top
-Gui Add, Picture, x0 y0 w1000 h700, D:\AHK\SoundM Whos Calling\Gui Assets\BG.png								;	This is the main background image
+Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop  -Caption 										;	removes system buttons, adds always-on-top
+Gui Add, Picture, x0 y0 w1000 h700, media\gui assets\BG.png														;	This is the main background image
 Gui Add, Picture, gGoogle x654 y159 w94 h96 +BackgroundTrans, %googlegrey%										;	this is the grey 	Google 		button
 Gui Add, Picture, vGoogle x654 y159 w94 h96 +BackgroundTrans, %googlecolour%									;	this is the colour 	Google 		button
 Gui Add, Picture, gFireFox x266 y272 w95 h100 +BackgroundTrans, %firefoxgrey%									;	this is the grey 	FireFox 	button
@@ -42,9 +42,9 @@ Gui Add, Picture, gBing x654 y272 w64 h96 +BackgroundTrans, %binggrey%										
 Gui Add, Picture, vBing x654 y272 w64 h96 +BackgroundTrans, %bingcolour%										;	this is the colour 	Bing 		button
 Gui Add, Picture, gQuickbase x654 y388 w72 h97 +BackgroundTrans, %quickbasegrey%								;	this is the grey 	QuickBase 	button
 Gui Add, Picture, vQuickBase x654 y388 w72 h97 +BackgroundTrans, %quickbasecolour%								;	this is the colour 	QuickBase 	button
-Gui Add, Picture, gClose hwndMyclose vMyclose x960 y23 w17 h17 +BackgroundTrans, %closebutton%					;	this is the normal	close 		button
-Gui Add, Picture, gSave hwndMysave vMysave x456 y649 w86 h33, %savehover%										;	this is the grey 	save 		button
-Gui Add, Picture, hwndMynosave vMynosave x456 y649 w86 h33, %savenohover%										;	this is the colour 	save		button
+Gui Add, Picture, gClose hWndMyclose vMyclose x960 y23 w17 h17 +BackgroundTrans, %closebutton%					;	this is the normal	close 		button
+Gui Add, Picture, gSave hWndMysave vMysave x456 y649 w86 h33, %savenohover%										;	this is the grey 	save 		button
+Gui Add, Picture, hWndMynosave vMynosave x456 y649 w86 h33, %savehover%											;	this is the colour 	save		button
 Gui Add, Picture, x29 y654 w33 h23 +BackgroundTrans, D:\AHK\SoundM Whos Calling\Gui Assets\hotkey logo.png		;	this is the logo
 Gui +LastFound
 WinSet, Region, 0-0 w1000 h700 R30-30, 
@@ -108,7 +108,8 @@ MouseOverPicture:
 Gui, Submit, NoHide
 MouseGetPos,,,,id, 
 
-if ( id = "Static16")
+
+if ( id = "Static15")
 {
 save = 1  
 }
