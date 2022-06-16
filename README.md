@@ -17,3 +17,5 @@ SMHotKey has been cleaned up and brought into this git, as I use the two for pro
 
 # Settings GUI
 The settings gui is now greatly improved with a fancy gui. Images and setting update in real time, and are locked in when you press save. The gui is pure AHK, and proves that modern gui designs can be made within AHK. We just have to be a bit smarter about what we use and how we prepare it.
+
+<img src="https://user-images.githubusercontent.com/42244545/174089531-6300a74e-71a4-4a9c-9e82-0d5e67a04df0.png" width="500">
