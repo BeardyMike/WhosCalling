@@ -15,4 +15,5 @@ The TrayMenuApplet isn't fussy about where it's stored or launched from, so long
 <img src="https://user-images.githubusercontent.com/42244545/166451751-e3d11029-15fe-4ba8-bcb5-74d8688bfd4d.jpg" width="100">
 SMHotKey has been cleaned up and brought into this git, as I use the two for professional purposes. If the featureset grows or requires lots of updates, I may break it out to its own git. But for now, it's a part of WhosCalling.
 
-
+# Settings GUI
+The settings gui is now greatly improved with a fancy gui. Images and setting update in real time, and are locked in when you press save. The gui is pure AHK, and proves that modern gui designs can be made within AHK. We just have to be a bit smarter about what we use and how we prepare it.
