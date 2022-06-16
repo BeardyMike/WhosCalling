@@ -1,7 +1,7 @@
-/*
+; updated for v0.8.4 HeartyHampster
+; ===================================================================================
 This is the SOUNDMARKETING Account Manager Hotkey application
-*/
-
+; ===================================================================================
 #NoEnv  														; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  												; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir% 									; Ensures a consistent starting directory.
@@ -10,11 +10,10 @@ SetWorkingDir %A_ScriptDir% 									; Ensures a consistent starting directory.
 #Include functions.ahk 											; this is file that contains all the functions
 
 
-
-
-
+; ===================================================================================
 ; VARIABLES
 ; FormatTime, CurrentDateTime,, ddMMyy 							; Prepare the DATE as DDMMYY
+; ===================================================================================
 
 IniRead, Initials, data.ini, Initials, USER						; Sets the Users Initals
 IniRead, Text1, data.ini, UserText, Text1						; prepares TextBank1 for use
@@ -23,18 +22,16 @@ IniRead, Text3, data.ini, UserText, Text3						; prepares TextBank3 for use
 USERDate = %Initials%%CurrentDateTime%							; example MB010170
 
 
-
-
+; ===================================================================================
 ; SPLASH IMAGE SETTINGS
+; ===================================================================================
 ; SplashImage = splash.png ; Locate the image
 ; SplashImageGUI(SplashImage, "Center", "Center", 2000, true) 	; Show the image for 2000ms
 
 
-
-
-
-
-
+; ===================================================================================
+; Tray Menu functions
+; ===================================================================================
 #Persistent
 TrayMenu()
 return
@@ -60,11 +57,9 @@ Gui, Destroy
 return
 
 
-
-
-
-
-
+; ===================================================================================
+; Commands
+; ===================================================================================
 
 +^$F1::   			; Ctrl+Shift+F1 							- Saves text into TextBank1
 TextBank1()

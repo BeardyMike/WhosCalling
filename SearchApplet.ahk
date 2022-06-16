@@ -1,18 +1,19 @@
-﻿; updated for v0.8 HeartyHampster
-; ================
-; = Startup Code =
-; ================ 
+﻿; updated for v0.8.4 HeartyHampster
+; ===================================================================================
+; Startup Code
+; ===================================================================================
 #NoEnv                                                                                      ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input                                                                              ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%                                                                 ; Ensures a consistent starting directory.
 
-; =============
-; = Variables =
-; ============= 
+
+; ===================================================================================
+; Variables
+; ===================================================================================
 internalcall=Internal call
 externalcall=External call
-;phonenumber=%1%    																		; The variable is created using the first parameter handed to the script by Windows
-phonenumber=ExampleNumber  																	; Example Number Variable for testing
+phonenumber=%1%    																			; The variable is created using the first parameter handed to the script by Windows
+; phonenumber=ExampleNumber  																; Example Number Variable for testing
 FormatTime, TimeString,, hh:mm:ss' on 'dd-MMM-yyyy                                          ; formats the date and time
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser                     ; reads the users preferred browser data
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine               ; reads the users preferred search engine
@@ -26,9 +27,10 @@ If ActivatedStatus = 0
 
 #Include, data\SearchAppletFunctions.func
 
-; =============
-; = Main Code =
-; ============= 
+
+; ===================================================================================
+; Main Code
+; ===================================================================================
 IfLess, phonenumber, 2050                                                                   ; if the phone number is greater than 3000 then its not an internal extensions, the log is updated and the script closes.
         {
             LogWriter(phonenumber, internalcall)
@@ -42,8 +44,8 @@ IfLess, phonenumber, 2050                                                       
     }
 
 
-; =============
-; = Exit Code =
-; ============= 
+; ===================================================================================
+; Exit Code
+; ===================================================================================
 Exit                                                                                        
 ; this EXIT needs to be the final line of code, exiting the script just incase I forget to close a function, preventing the script from crashing or running endlessly

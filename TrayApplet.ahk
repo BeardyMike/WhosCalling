@@ -1,15 +1,16 @@
-; ================
-; = Startup Code =
-; ================ 
+; updated for v0.8.4 HeartyHampster
+; ===================================================================================
+; Startup Code
+; ===================================================================================
 #NoEnv                                                                                      ; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input                                                                              ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%                                                                 ; Ensures a consistent starting directory.
 #Persistent
 #SingleInstance
 #include, data\tf.ahk
-; =================================== ;
-; = Variable check and data loading = ;
-; =================================== ;
+; ===================================================================================
+; Variable check and data loading
+; ===================================================================================
 
 IfNotExist, C:\ProgramData\3CXPhone for Windows\
 {
@@ -42,9 +43,9 @@ run, splashscreen\SplashScreen.exe
 ; SplashImage, media\Not Activated.png, B                                                     ; loads the Not Activated splash image, it is turned off after the tray menu and other items have loaded.
 ; }
 
-; ============= ;
-; = Tray Menu = ;
-; ============= ;
+; ===================================================================================
+; Tray Menu
+; ===================================================================================
 
 Menu, Tray, Icon, media\Logo.ico, 1                             ; adds the logo
 Menu, Tray, NoStandard,                                         ; removes the standard AHK menu items
@@ -56,9 +57,9 @@ Menu, Tray, Add, Settings                                       ; adds the Setti
 Menu, Tray, Add, Exit                                           ; add an exit button
 
 
-; ===================== ;
-; = Activation Checks = ;
-; ===================== ;
+; ===================================================================================
+; Activation Checks
+; ===================================================================================
 global ActivatedStatus
 If ActivatedStatus = 0
     Menu, Tray, Default, Activated
@@ -103,9 +104,9 @@ else
 return
 
 
-; ============= ;
-; = About Gui = ;
-; ============= ;
+; ===================================================================================
+; About Gui
+; ===================================================================================
 About:
     Gui, 1:Font, s9, Segoe UI
     Gui, 1:Add, Button, x283 y194 w47 h23, &OK
@@ -129,9 +130,9 @@ GuiClose:
 
 
 
-; ================= ;
-; = Activated Gui = ;
-; ================= ;
+; ===================================================================================
+; Activated Gui
+; ===================================================================================
 Activated:
 Gui, 2:-MinimizeBox -MaximizeBox
 Gui, 2:Font, s9, Segoe UI
@@ -174,9 +175,9 @@ Settings:
 run, settings.exe
 return
 
-; ================ ;
-; = Exit Trigger = ;
-; ================ ;
+; ===================================================================================
+; Exit Trigger
+; ===================================================================================
 
 ExitFromApp() ;
 {
@@ -193,6 +194,10 @@ ExitFromApp() ;
 	Run, C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe
     ExitApp, [ ExitCode]
 }
+
+; ===================================================================================
+; End
+; ===================================================================================
 
 #+q:: ; win+shift+q
 exit:

@@ -1,15 +1,24 @@
-﻿#SingleInstance Force
+﻿; updated for v0.8.4 HeartyHampster
+; ===================================================================================   
+; = Startup Code =
+; ===================================================================================   
+#SingleInstance Force
 #Persistent
 #NoEnv
 SetWorkingDir %A_ScriptDir%
 SetBatchLines -1
-; #NoTrayIcon
+#NoTrayIcon
 
 
+; ===================================================================================   
 ; Initial Variables
+; ===================================================================================   
 save = 1
 
+
+; ===================================================================================   
 ; GUI Assets Variables
+; ===================================================================================   
 googlegrey = media\gui assets\Google Grey.png
 googlecolour = media\gui assets\Google Colour.png
 firefoxgrey = media\gui assets\Firefox Grey.png
@@ -27,9 +36,9 @@ savehover = media\gui assets\Save hover.png
 savenohover = media\gui assets\Save no hover.png
 
 
-
-
+; ===================================================================================   
 ; Settings GUI
+; ===================================================================================   
 Gui -MinimizeBox -MaximizeBox -SysMenu +AlwaysOnTop  -Caption 											;	removes system buttons, adds always-on-top
 Gui Add, Picture, x0 y0 w1000 h700, media\gui assets\BG.png														;	This is the main background image
 Gui Add, Picture, gGoogle x654 y159 w94 h96 +BackgroundTrans, %googlegrey%										;	this is the grey 	Google 		button
@@ -52,7 +61,10 @@ Gui +LastFound
 WinSet, Region, 0-0 w1000 h700 R30-30, 
 OnMessage(0x201, "WM_LBUTTONDOWN")
 
+
+; ===================================================================================   
 ; this sets up the buttons when the GUI first loads
+; ===================================================================================   
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
 if  ( BrowserType = "Chrome" )
@@ -103,9 +115,9 @@ SetTimer, GuiController, 1
 return
 
 
-
-
+; ===================================================================================      
 ; gLabel commands from the gui
+; ===================================================================================   
 Chrome:
 IniWrite, Chrome, data\settings.ini, userdata, userpreferredbrowser
 return
@@ -131,9 +143,9 @@ IniWrite, Quickbase, data\settings.ini, userdata, userpreferredsearchengine
 return
 
 
-
-
+; ===================================================================================     
 ;reads if the mouse is hovering over the save button and changes a variable to 1 or 0
+; ===================================================================================
 MouseOverPicture:
 Gui, Submit, NoHide
 MouseGetPos,,,,id, 
@@ -148,9 +160,9 @@ save = 0
 return
 
 
-
-
+; ===================================================================================   
 ; This updates the GUI Buttons based on the selected settings
+; ===================================================================================   
 GuiController: 
 IniRead, BrowserType, data\settings.ini, userdata, userpreferredbrowser  
 IniRead, SearchEngine, data\settings.ini, userdata, userpreferredsearchengine  
@@ -204,20 +216,17 @@ if  ( SearchEngine = "Quickbase" )
 return
 
 
-
-
-
-
-; hold left click to move window
+; ===================================================================================   
+; Hold left click to move window
+; ===================================================================================   
 WM_LBUTTONDOWN(wParam, lParam, msg, hwnd) 		
 {
    PostMessage 0xA1, 2
 }
 
-
-
-
-
+; ===================================================================================   
+; Functions
+; ===================================================================================   
 
 Close(CtrlHwnd, GuiEvent, EventInfo, ErrLevel := "") {
 ExitApp
@@ -251,5 +260,7 @@ OnWM_LBUTTONDOWN(wParam, lParam, msg, hWnd) {
 }
 
 
-
+; ===================================================================================   
+; End
+; ===================================================================================  
 
