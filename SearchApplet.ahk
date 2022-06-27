@@ -31,12 +31,12 @@ If ActivatedStatus = 0
 ; ===================================================================================
 ; Main Code
 ; ===================================================================================
-IfLess, phonenumber, 2050                                                                   ; if the phone number is greater than 3000 then its not an internal extensions, the log is updated and the script closes.
+IfLess, phonenumber, 2050                                          	; if the phone number is greater than 3000 then its not an internal extensions, the log is updated and the script closes.
         {
             LogWriter(phonenumber, internalcall)
             Return
         }
-    Else                                                                                    ; If the number isnt an internal extension, the script opens chrome and searches google.co.uk for the number, and adds the caller to the log.
+    Else                                                           	; If the number isnt an internal extension, the script opens chrome and searches google.co.uk for the number, and adds the caller to the log.
     {
         Search(phonenumber)
         LogWriter(phonenumber, externalcall)
