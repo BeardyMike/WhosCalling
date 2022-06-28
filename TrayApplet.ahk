@@ -46,26 +46,100 @@ run, splashscreen\SplashScreen.exe
 ; ===================================================================================
 ; Tray Menu
 ; ===================================================================================
-
+Menu, WhosCallingMenu, Add, Activated             	            ; adds the activated menu item
+Menu, WhosCallingMenu, Add, About                              	; adds the about menu item
+Menu, WhosCallingMenu, Add, Settings  
+Menu, SMHotKeyMenu, Add, SMHKHelp 
+Menu, SMHotKeyMenu, Add, SMHKAbout 
 Menu, Tray, Icon, media\Logo.ico, 1                             ; adds the logo
-Menu, Tray, NoStandard,                                         ; removes the standard AHK menu items
-Menu, Tray, Add, Activated                                      ; adds the activated menu item
-Menu, Tray, Add                                                 ; separator
-Menu, Tray, Add, About                                          ; adds the about menu item
-Menu, Tray, Add                                                 ; separator
-Menu, Tray, Add, Settings                                       ; adds the Settings menu item
+Menu, Tray, NoStandard,   										; removes the standard AHK menu items
+Menu, Tray, Add, WhosCalling, :WhosCallingMenu            		; makes a submenu for whoscalling
+Menu, Tray, Add, SMHotKey, :SMHotKeyMenu            			; makes a submenu for whoscalling
 Menu, Tray, Add, Exit                                           ; add an exit button
+
+If ActivatedStatus = 0
+    {
+        Menu, WhosCallingMenu, Rename, Activated, Not Activated
+        Menu, Tray, Tip , Not Activated
+    }
+else
+    {
+        Menu, WhosCallingMenu, Disable, Activated
+        Menu, Tray, Tip , Whos Calling
+
+
+    }          
+return
+
+return
+
+; Original TrayMenu
+; Menu, Tray, Icon, media\Logo.ico, 1                             ; adds the logo
+; Menu, Tray, NoStandard,                                         ; removes the standard AHK menu items
+; Menu, Tray, Add, Activated                                      ; adds the activated menu item
+; Menu, Tray, Add                                                 ; separator
+; Menu, Tray, Add, About                                          ; adds the about menu item
+; Menu, Tray, Add                                                 ; separator
+; Menu, Tray, Add, Settings                                       ; adds the Settings menu item
+; Menu, Tray, Add, Exit                                           ; add an exit button
+
+return
+
+SMHKHelp:
+SMHotKeyHelpFunction()
+return
+
+SMHKAbout:
+SMHotKeyAboutPage()
+return
+
+
+
+SMHotKeyHelpFunction()
+{
+	Gui, New,, Help Box,
+	Gui, Font, s12, Verdana
+	Gui, Add, Text,, Win+Z - Initials and CurrentDate.	
+	Gui, Add, Text,, Ctrl+Shift+Z - CurrentDate.
+	Gui, Add, Text,, Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.
+	Gui, Add, Text,, Ctrl+Shift+V - Activate window under mouse cursor, click, paste.
+	Gui, Add, Text,, Ctrl+Alt+V - Tabs to next entry, then pastes, useful when checking VA invoices.
+	Gui, Add, Text,, Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.
+	Gui, Add, Text,, Ctrl+Shift+F12 - Change USER initials.
+	Gui, Add, Text,, Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the clipboard.
+	Gui, Add, Text,, Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.
+	Gui, Add, Text,, Ctrl+F7	- Select all items, delete them, then move back one folder.
+	Gui, Add, Button, Default w80, OK
+	Gui, Show
+	return
+}
+
+SMHotKeyAboutPage()
+{
+	IniRead, SMVersion, \SMHotKey\data.ini, Version, SMVersion 							; Reads the SMVersion value from the data.ini
+	IniRead, Author, \SMHotKey\data.ini, Version, Author 									; Reads the Author value from the data.ini
+	IniRead, Creation, \SMHotKey\data.ini, Version, Creation								; Reads the Creation value from the data.ini
+	IniRead, Contact, \SMHotKey\data.ini, Version, Contact								; Reads the Contact value from the data.ini
+	IniRead, Email, \SMHotKey\data.ini, Version, Email									; Reads the Email Value from the data.ini
+	Gui, Add, Picture, x12 y9 w150 h150 , \SMHotKey\splash.png
+	Gui, Font, s14, Verdana
+	Gui, Add, Text, x172 y49 w190 h70 +Left, Sound Marketing Account Manager Hotkey Application
+	Gui, Font, s6, Verdana
+	Gui, Add, Text, x12 y249 w140 h10 +Left, Software version %SMVersion%
+	Gui, Font, s10, Verdana
+	Gui, Add, Text, x12 y169 w190 h20 +Left, Created by %Author%
+	Gui, Add, Text, x212 y169 w180 h20 +Left, Created on %Creation%
+	Gui, Add, Text, x12 y199 w190 h20 +Left, Phone: %Contact%
+	Gui, Add, Text, x212 y199 w180 h20 +Left, Email: %Email%
+	Gui, Add, Button, x292 y229 w100 h30 , OK
+	Gui, Show, x127 y87 h276 w410, New GUI Window
+	Return
+}
 
 
 ; ===================================================================================
 ; Activation Checks
 ; ===================================================================================
-global ActivatedStatus
-If ActivatedStatus = 0
-    Menu, Tray, Default, Activated
-Else
-    Menu, Tray, Default, About
-
 
 ; if ActivatedStatus = 1
 ; {
@@ -89,19 +163,6 @@ Else
 
 Run, C:\ProgramData\3CXPhone for Windows\PhoneApp\3CXWin8Phone.exe
 
-If ActivatedStatus = 0
-    {
-        Menu, Tray, Rename, Activated, Not Activated
-        Menu, Tray, Tip , Not Activated
-    }
-else
-    {
-        Menu, Tray, Disable, Activated
-        Menu, Tray, Tip , Whos Calling
-
-
-    }          
-return
 
 
 ; ===================================================================================

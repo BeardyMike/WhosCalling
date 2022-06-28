@@ -1,6 +1,6 @@
 ; updated for v0.8.4 HeartyHampster
 ; ===================================================================================
-This is the SOUNDMARKETING Account Manager Hotkey application
+; This is the SOUNDMARKETING Account Manager Hotkey application
 ; ===================================================================================
 #NoEnv  														; Recommended for performance and compatibility with future AutoHotkey releases.
 SendMode Input  												; Recommended for new scripts due to its superior speed and reliability.
@@ -20,42 +20,6 @@ IniRead, Text1, data.ini, UserText, Text1						; prepares TextBank1 for use
 IniRead, Text2, data.ini, UserText, Text2						; prepares TextBank2 for use
 IniRead, Text3, data.ini, UserText, Text3						; prepares TextBank3 for use
 USERDate = %Initials%%CurrentDateTime%							; example MB010170
-
-
-; ===================================================================================
-; SPLASH IMAGE SETTINGS
-; ===================================================================================
-; SplashImage = splash.png ; Locate the image
-; SplashImageGUI(SplashImage, "Center", "Center", 2000, true) 	; Show the image for 2000ms
-
-
-; ===================================================================================
-; Tray Menu functions
-; ===================================================================================
-#Persistent
-TrayMenu()
-return
-
-Reeload:
-Reload
-return
-
-ButtonExit:
-ExitApp
-return
-
-HELPFUNCTION:
-HelpFunction()
-return
-
-AboutPage:
-AboutPage()
-return
-
-ButtonOK: 			; No Key Combo								- This is the code for the OK button
-Gui, Destroy
-return
-
 
 ; ===================================================================================
 ; Commands
@@ -101,17 +65,10 @@ return
 PassTypePC()
 return
 
-+^w::				; Ctrl+Shift+W
-GoldMinePendingCompleter()
-return
-
 #+z::				; Win+Shift+z								- CurrentDate
 CurrentTime()
 return 
-	
-^$F7::				; Ctrl+F7									- Select all items, delete them, then move back one folder
-ScriptsFolderDelete()
-return
+
 
 ^$F8::				; Ctrl+F8	
 MessagePaster1()												- Types out the contents of TextBank1 in a human manner
