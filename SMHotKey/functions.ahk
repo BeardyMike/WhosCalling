@@ -234,15 +234,15 @@ SplashImageGUI(Picture, X, Y, Duration, Transparent = true)
 ; ===================================================================================
 TrayMenu()
 {
-	Menu, Tray, Icon , icon.ico,
-	Menu, Tray, NoStandard 														; removes the standard Menu items
-	Menu, Tray, Add , Help, HELPFUNCTION 										; OPTION - opens the Help GUI
-	Menu, Tray, Add , About, AboutPage 											; OPTION - opens the about page
-	Menu, Tray, Add 															; Adds a divider
-	Menu, Tray, Add , R&eload, Reeload 											; OPTION - reload script button
-	Menu, Tray, Add 															; Adds a divider
-	Menu, Tray, Add , E&xit, ButtonExit 										; OPTION - Exits the App
-	Return
+; 	Menu, Tray, Icon , icon.ico,
+; 	Menu, Tray, NoStandard 														; removes the standard Menu items
+; 	Menu, Tray, Add , Help, HELPFUNCTION 										; OPTION - opens the Help GUI
+; 	Menu, Tray, Add , About, AboutPage 											; OPTION - opens the about page
+; 	Menu, Tray, Add 															; Adds a divider
+; 	Menu, Tray, Add , R&eload, Reeload 											; OPTION - reload script button
+; 	Menu, Tray, Add 															; Adds a divider
+; 	Menu, Tray, Add , E&xit, ButtonExit 										; OPTION - Exits the App
+; 	Return
 }
 
 
