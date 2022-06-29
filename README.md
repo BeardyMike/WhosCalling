@@ -1,4 +1,3 @@
-v0.8.4
 ![demo](https://user-images.githubusercontent.com/42244545/166450675-6383136c-7eef-4fad-ab4d-2a62eb3c6363.gif)
 
 # WhosCalling <img src="https://user-images.githubusercontent.com/42244545/166451873-2975a474-efd3-4800-b22d-95ca712f65c9.png" width="50">
