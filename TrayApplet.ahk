@@ -131,8 +131,8 @@ SMHotKeyHelpFunction()
 	Gui, 3:Add, Text,, Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the clipboard.
 	Gui, 3:Add, Text,, Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.
 	Gui, 3:Add, Text,, Ctrl+F7	- Select all items, delete them, then move back one folder.
-	Gui, 3:Add, Button, Default w80, OK
-	Gui, 3:Show
+	Gui, 3:Add, Button,  w80, &OK
+	Gui, 3:Show,, SMHotKey Help
 	return
 }
 
@@ -153,8 +153,8 @@ SMHotKeyAboutPage()
 	Gui, 4:Add, Text, x212 y169 w180 h20 +Left, Created on %Creation%
 	Gui, 4:Add, Text, x12 y199 w190 h20 +Left, Phone: %Contact%
 	Gui, 4:Add, Text, x212 y199 w180 h20 +Left, Email: %Email%
-	Gui, 4:Add, Button, x292 y229 w100 h30 , OK
-	Gui, 4:Show, x127 y87 h276 w410, New GUI Window
+	Gui, 4:Add, Button,  x292 y229 w100 h30 , &OK
+	Gui, 4:Show, x127 y87 h276 w410, SMHotKey About
 	Return
 }
 ; ===================================================================================
@@ -170,10 +170,13 @@ About:
     Gui, 1:Font
     Gui, 1:Font, s9, Segoe UI
     Gui, 1:Add, Text, x6 y167 w327 h23 +0x200, A custom 3CX and Quickbase telephone number search tool
-    Gui, 1:Show, w337 h223, Window
+    Gui, 1:Show, w337 h223, About
     Return
 
 ButtonOK:
+2ButtonOK:
+3ButtonOK:
+4ButtonOK:
 GuiEscape:
 GuiClose:
     Gui, 1:Hide
