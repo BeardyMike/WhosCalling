@@ -52,10 +52,12 @@ WCUpdater()
 IniRead, currentversion, data\settings.ini, appdata, version
 URLDownloadToFile, %settingsdownloadlink%, %A_Temp%\settings.ini
 IniRead, newversion, %A_Temp%\settings.ini, appdata, version
-if %currentversion% >= %newversion%
+
+versioncheck = VerCmp(%currentversion%, %newversion%)
+if %versioncheck% = 0
 {
 MsgBox You're up to date!
-} else if %currentversion% < %newversion% {
+} else if %versioncheck% < 0 {
 	Process, Close, TrayApplet.exe
 	Process, Close, SMHotKey.exe
 	Process, Close, 3CXWin8Phone.exe
@@ -175,3 +177,17 @@ if  ( closebutton = "1" )
      GuiControl, hide, Closebutton,
 			}
 return
+
+
+
+
+; ===================================================================================   
+; Other Functions
+; ===================================================================================   
+
+; https://www.autohotkey.com/boards/viewtopic.php?t=77109
+VerCmp(V1, V2) {           ; VerCmp() for Windows by SKAN on D35T/D37L @ tiny.cc/vercmp 
+Return ( ( V1 := Format("{:04X}{:04X}{:04X}{:04X}", StrSplit(V1 . "...", ".",, 5)*) )
+       < ( V2 := Format("{:04X}{:04X}{:04X}{:04X}", StrSplit(V2 . "...", ".",, 5)*) ) )
+       ? -1 : ( V2<V1 ) ? 1 : 0
+}
