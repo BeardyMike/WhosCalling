@@ -10,7 +10,7 @@ SetWorkingDir %A_ScriptDir%
 #NoTrayIcon
 
 
-settingsdownloadlink =https://github.com/BeardyMike/WhosCalling/blob/beta/data/settings.ini
+settingsdownloadlink =https://raw.githubusercontent.com/BeardyMike/WhosCalling/beta/data/settings.ini
 githubdownloadlink =https://github.com/BeardyMike/WhosCalling/archive/refs/heads/beta.zip
 guibg = media\gui assets\Updater\BG.png
 guiclosepip =media\gui assets\Close Button.png
@@ -49,22 +49,22 @@ WCUpdater()
 {
 
 ; compares version numbers, then either updates or lets the user know they are upto date.
+FileCreateDir, %A_ScriptDir%\Temp											; creates Temp folder
 IniRead, currentversion, data\settings.ini, appdata, version
-URLDownloadToFile, %settingsdownloadlink%, %A_Temp%\settings.ini
-IniRead, newversion, %A_Temp%\settings.ini, appdata, version
+URLDownloadToFile, %settingsdownloadlink%, Temp\settings.ini
+IniRead, newversion, Temp\settings.ini, appdata, version
 
-versioncheck = VerCmp(%currentversion%, %newversion%)
-if %versioncheck% = 0
+if VerCmp(currentversion, newversion) = 0
 {
 MsgBox You're up to date!
-} else if %versioncheck% < 0 {
+} else if VerCmp(currentversion, newversion) == -1 {
 	Process, Close, TrayApplet.exe
 	Process, Close, SMHotKey.exe
 	Process, Close, 3CXWin8Phone.exe
 
 
 ; moves all the current files in the main directory into an old version folder for rollback if needed
-FileCreateDir, \oldversion										; creates oldversion folder
+FileCreateDir, %A_ScriptDir%\oldversion						; creates oldversion folder
 
 FileMove, Changelog.txt, \oldversion 							; moves files to oldversion folder
 FileMove, old settings.ahk, \oldversion 						; moves files to oldversion folder
@@ -83,28 +83,28 @@ FileMoveDir, \SMHotKey, \oldversion\SMHotKey					; moves folder to oldversion fo
 FileMoveDir, \splashscreen, \oldversion\splashscreen			; moves folder to oldversion folder
 
 ; Downloads the latest version and unzips it into the TEMP directory
-URLDownloadToFile, %githubdownloadlink%, %A_Temp%\whoscallingupdate.zip
-RunWait PowerShell.exe -NoExit -Command Expand-Archive -LiteralPath '%A_Temp%\whoscallingupdate.zip' -DestinationPath %A_Temp%\,, Hide
+URLDownloadToFile, %githubdownloadlink%, Temp\whoscallingupdate.zip
+RunWait PowerShell.exe -NoExit -Command Expand-Archive -LiteralPath Temp\whoscallingupdate.zip' -DestinationPath Temp\,, Hide
 
 ;Copies all the new files in the main WhosCalling Directory
-FileMove, %A_Temp%\WhosCalling\Changelog.txt, %A_ScriptDir%\oldversion 							; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\old settings.ahk, %A_ScriptDir%\oldversion 						; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\README.md, %A_ScriptDir%\oldversion 								; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\SearchApplet.ahk, %A_ScriptDir%\oldversion 						; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\SearchApplet.exe, %A_ScriptDir%\oldversion 						; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\settings.ahk, %A_ScriptDir%\oldversion 							; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\settings.exe, %A_ScriptDir%\oldversion 							; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\TrayApplet.ahk, %A_ScriptDir%\oldversion 						; moves files to main folder
-FileMove, %A_Temp%\WhosCalling\TrayApplet.exe, %A_ScriptDir%\oldversion 						; moves files to main folder
+FileMove, Temp\WhosCalling\Changelog.txt, oldversion 							; moves files to main folder
+FileMove, Temp\WhosCalling\old settings.ahk, oldversion 						; moves files to main folder
+FileMove, Temp\WhosCalling\README.md, oldversion 								; moves files to main folder
+FileMove, Temp\WhosCalling\SearchApplet.ahk, oldversion 						; moves files to main folder
+FileMove, Temp\WhosCalling\SearchApplet.exe, oldversion 						; moves files to main folder
+FileMove, Temp\WhosCalling\settings.ahk, oldversion 							; moves files to main folder
+FileMove, Temp\WhosCalling\settings.exe, oldversion 							; moves files to main folder
+FileMove, Temp\WhosCalling\TrayApplet.ahk, oldversion 							; moves files to main folder
+FileMove, Temp\WhosCalling\TrayApplet.exe, oldversion 						; moves files to main folder
 
-FileMoveDir, %A_Temp%\WhosCalling\data, %A_ScriptDir%\oldversion\data							; moves folder to main folder
-FileMoveDir, %A_Temp%\WhosCalling\logs, %A_ScriptDir%\oldversion\logs							; moves folder to main folder
-FileMoveDir, %A_Temp%\WhosCalling\media, %A_ScriptDir%\oldversion\media							; moves folder to main folder
-FileMoveDir, %A_Temp%\WhosCalling\SMHotKey, %A_ScriptDir%\oldversion\SMHotKey					; moves folder to main folder
-FileMoveDir, %A_Temp%\WhosCalling\splashscreen, %A_ScriptDir%\oldversion\splashscreen			; moves folder to main folder
+FileMoveDir, Temp\WhosCalling\data, oldversion\data							; moves folder to main folder
+FileMoveDir, Temp\WhosCalling\logs, oldversion\logs							; moves folder to main folder
+FileMoveDir, Temp\WhosCalling\media, oldversion\media							; moves folder to main folder
+FileMoveDir, Temp\WhosCalling\SMHotKey, oldversion\SMHotKey					; moves folder to main folder
+FileMoveDir, Temp\WhosCalling\splashscreen, oldversion\splashscreen			; moves folder to main folder
 }
 return
-
+}
 
 
 
