@@ -138,19 +138,19 @@ SMHotKeyHelpFunction()
 
 SMHotKeyAboutPage()
 {
-	IniRead, SMVersion, \SMHotKey\data.ini, Version, SMVersion 							; Reads the SMVersion value from the data.ini
-	IniRead, Author, \SMHotKey\data.ini, Version, Author 									; Reads the Author value from the data.ini
-	IniRead, Creation, \SMHotKey\data.ini, Version, Creation								; Reads the Creation value from the data.ini
-	IniRead, Contact, \SMHotKey\data.ini, Version, Contact								; Reads the Contact value from the data.ini
-	IniRead, Email, \SMHotKey\data.ini, Version, Email									; Reads the Email Value from the data.ini
-	Gui, 4:Add, Picture, x12 y9 w150 h150 , \SMHotKey\splash.png
+	IniRead, SMVersion, SMHotKey\data.ini, Version, SMVersion 							; Reads the SMVersion value from the data.ini
+	IniRead, Author, SMHotKey\data.ini, Version, Author 									; Reads the Author value from the data.ini
+	IniRead, Updated, SMHotKey\data.ini, Version, Updated								; Reads the Creation value from the data.ini
+	IniRead, Contact, SMHotKey\data.ini, Version, Contact								; Reads the Contact value from the data.ini
+	IniRead, Email, SMHotKey\data.ini, Version, Email									; Reads the Email Value from the data.ini
+	Gui, 4:Add, Picture, x12 y9 w150 h150 , SMHotKey\splash.png
 	Gui, 4:Font, s14, Verdana
 	Gui, 4:Add, Text, x172 y49 w190 h70 +Left, Sound Marketing Account Manager Hotkey Application
 	Gui, 4:Font, s6, Verdana
 	Gui, 4:Add, Text, x12 y249 w140 h10 +Left, Software version %SMVersion%
 	Gui, 4:Font, s10, Verdana
 	Gui, 4:Add, Text, x12 y169 w190 h20 +Left, Created by %Author%
-	Gui, 4:Add, Text, x212 y169 w180 h20 +Left, Created on %Creation%
+	Gui, 4:Add, Text, x212 y169 w180 h20 +Left, Updated on %Updated%
 	Gui, 4:Add, Text, x12 y199 w190 h20 +Left, Phone: %Contact%
 	Gui, 4:Add, Text, x212 y199 w180 h20 +Left, Email: %Email%
 	Gui, 4:Add, Button,  x292 y229 w100 h30 , &OK
@@ -179,10 +179,10 @@ ButtonOK:
 4ButtonOK:
 GuiEscape:
 GuiClose:
-    Gui, 1:Hide
-    Gui, 2:Hide
-	Gui, 3:Hide
-	Gui, 4:Hide
+    Gui, 1: Destroy
+    Gui, 2: Destroy
+	Gui, 3: Destroy
+	Gui, 4: Destroy
     return
 
 
