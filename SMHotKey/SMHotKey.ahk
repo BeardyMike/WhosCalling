@@ -8,6 +8,7 @@ SetWorkingDir %A_ScriptDir% 									; Ensures a consistent starting directory.
 #SingleInstance force 											; Prevents mulitple instances from being run at the same time.
 #NoTrayIcon
 #Include functions.ahk 											; this is file that contains all the functions
+SetTimer, SpeakerWake, 600000
 
 
 ; ===================================================================================
@@ -24,6 +25,10 @@ USERDate = %Initials%%CurrentDateTime%							; example MB010170
 ; ===================================================================================
 ; Commands
 ; ===================================================================================
+
+SpeakerWake:		; autoloops									- plays a .5sec 18kHz tone every 10 mins to keep speakers awake. Should be inaudible
+SpeakerWake()
+return
 
 +^$F1::   			; Ctrl+Shift+F1 							- Saves text into TextBank1
 TextBank1()
