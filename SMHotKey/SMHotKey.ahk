@@ -98,3 +98,7 @@ return
 !5::				; Alt+5										- Click, then paste
 ClickPaste()
 return
+
+^+0::               ; Ctrl+Shift+0                              - Quickbase Action Dater
+CRMDate()
+return
