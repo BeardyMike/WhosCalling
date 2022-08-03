@@ -346,7 +346,7 @@ return
 ; ===================================================================================
 CRMDate()
 {
-FormatTime, CRMTime,, dd-MM-yy hh:mm		; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
+FormatTime, CRMTime,, dd.MM.yy HH:mm		; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
 SendInput %CRMTime%
 return
 }
