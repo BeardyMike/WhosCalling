@@ -75,15 +75,6 @@ TextBank3()
 ; ===================================================================================
 GetPixelColour()
 {
-	MouseGetPos(&MouseX, &MouseY)
-	colour := PixelGetColor(MouseX, MouseY, "alternate,")
-	msgResult := MsgBox("The colour at the current cursor position is " colour ". Would you like to copy this to the A_Clipboard?", "", 4)
-		if (msgResult = "Yes")
-			A_Clipboard := colour
-			; StrReplace() is not case sensitive
-			; check for StringCaseSense in v1 source script
-			; and change the CaseSense param in StrReplace() if necessary
-			A_Clipboard := StrReplace(A_Clipboard, "0x")  							; finds all instances of 0x in the clipboard and removes them
 	return
 }
 
@@ -116,17 +107,6 @@ TripleCopy()
 ; ===================================================================================
 ; Ultrapaste
 ; ===================================================================================
-; UltraPaste()
-; {
-; 	ActivateWinUM2:
-; 	MouseGetPos,,, WinUMID 									; Identify the window under the mouse cursor
-; 	WinActivate, ahk_id %WinUMID% 								; Activate the window under the mouse cursor
-; 	Click,											; Click once under the cursor
-; 	Click,											; Click once under the cursor
-; 	Send, ^v 										; Paste
-;  	Return
-; 
-; }
 
 UltraPaste()
 {
@@ -144,43 +124,33 @@ UltraPaste()
 ; ===================================================================================
 InitialsDate()
 {
-	Datetype := IniRead("data.ini", "Variable", "Datetype")	; Sets the Users Initals
 	Initials := IniRead("data.ini", "Initials", "USER")		; Sets the Users Initals
-	If (Datetype = 1)
-		{
-			CurrentDateTime := FormatTime(, "ddMMyy") 			; Prepare the DATE as DDMMYY
-			SendInput(Initials "" CurrentDateTime) 			; Sends initials + currentdate
-		}
-	else
-		{
-			CurrentDateTime := FormatTime(, "dd.MM.yy") 			; Prepare the DATE as DD.MM.YY
-			SendInput(Initials " " CurrentDateTime) 			; Sends initials + currentdate with a space inbetween
-		}
+	CurrentDateTime := FormatTime(, "ddMMyy") 			; Prepare the DATE as DDMMYY
+	SendEvent(Initials . CurrentDateTime) 			; Sends initials + currentdate
 	return
 }
-
 
 ; ===================================================================================
 ; Help GUI
 ; ===================================================================================
 HelpFunction()
 {
-	myGui := Gui()
-	myGui.New(, "Help Box")
-	myGui.SetFont("s12", "Verdana")
-	myGui.Add("Text", , "Win+Z - Initials and CurrentDate.")
-	myGui.Add("Text", , "Ctrl+Shift+Z - CurrentDate.")
-	myGui.Add("Text", , "Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.")
-	myGui.Add("Text", , "Ctrl+Shift+V - Activate window under mouse cursor, click, paste.")
-	myGui.Add("Text", , "Ctrl+Alt+V - Tabs to next entry, then pastes, useful when checking VA invoices.")
-	myGui.Add("Text", , "Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.")
-	myGui.Add("Text", , "Ctrl+Shift+F12 - Change USER initials.")
-	myGui.Add("Text", , "Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the A_Clipboard.")
-	myGui.Add("Text", , "Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.")
-	myGui.Add("Text", , "Ctrl+F7	- Select all items, delete them, then move back one folder.")
-	ogcButtonOK := myGui.Add("Button", "Default w80", "OK")
-	ogcButtonOK.OnEvent("Click", ButtonOK.Bind("Normal"))
-	myGui.Show()
+	HelpGui := Gui()
+	HelpGui.New(, "Help Box")
+	HelpGui.SetFont("s12", "Verdana")
+	HelpGui.Add("Text", , "Win+Z - Initials and CurrentDate.")
+	HelpGui.Add("Text", , "Ctrl+Shift+Z - CurrentDate.")
+	HelpGui.Add("Text", , "Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.")
+	HelpGui.Add("Text", , "Ctrl+Shift+V - Activate window under mouse cursor, click, paste.")
+	HelpGui.Add("Text", , "Ctrl+Alt+V - Tabs to next entry, then pastes, useful when checking VA invoices.")
+	HelpGui.Add("Text", , "Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.")
+	HelpGui.Add("Text", , "Ctrl+Shift+F12 - Change USER initials.")
+	HelpGui.Add("Text", , "Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the A_Clipboard.")
+	HelpGui.Add("Text", , "Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.")
+	HelpGui.Add("Text", , "Ctrl+F7	- Select all items, delete them, then move back one folder.")
+	ogcButtonOK := HelpGui.Add("Button", "Default w80", "OK")
+	ogcButtonOK.OnEvent("Click", button_close(HelpGui))
+	HelpGui.Show()
 	return
 }
 
@@ -195,20 +165,21 @@ AboutPage()
 	Creation := IniRead("data.ini", "Version", "Creation")								; Reads the Creation value from the data.ini
 	Contact := IniRead("data.ini", "Version", "Contact")								; Reads the Contact value from the data.ini
 	Email := IniRead("data.ini", "Version", "Email")									; Reads the Email Value from the data.ini
-	myGui.Add("Picture", "x12 y9 w150 h150", "C:\AHK\splash.png")
-	myGui.SetFont("s14", "Verdana")
-	myGui.Add("Text", "x172 y49 w190 h70 +Left", "Sound Marketing Account Manager Hotkey Application")
-	myGui.SetFont("s6", "Verdana")
-	myGui.Add("Text", "x12 y249 w140 h10 +Left", "Software version " . SMVersion)
-	myGui.SetFont("s10", "Verdana")
-	myGui.Add("Text", "x12 y169 w190 h20 +Left", "Created by " . Author)
-	myGui.Add("Text", "x212 y169 w180 h20 +Left", "Created on " . Creation)
-	myGui.Add("Text", "x12 y199 w190 h20 +Left", "Phone: " . Contact)
-	myGui.Add("Text", "x212 y199 w180 h20 +Left", "Email: " . Email)
-	ogcButtonOK := myGui.Add("Button", "x292 y229 w100 h30", "OK")
-	ogcButtonOK.OnEvent("Click", ButtonOK.Bind("Normal"))
-	myGui.Title := "New GUI Window"
-	myGui.Show("x127 y87 h276 w410")
+	AboutGui.Add("Picture", "x12 y9 w150 h150", "C:\AHK\splash.png")
+	AboutGui := Gui()
+	AboutGui.SetFont("s14", "Verdana")
+	AboutGui.Add("Text", "x172 y49 w190 h70 +Left", "Sound Marketing Account Manager Hotkey Application")
+	AboutGui.SetFont("s6", "Verdana")
+	AboutGui.Add("Text", "x12 y249 w140 h10 +Left", "Software version " . SMVersion)
+	AboutGui.SetFont("s10", "Verdana")
+	AboutGui.Add("Text", "x12 y169 w190 h20 +Left", "Created by " . Author)
+	AboutGui.Add("Text", "x212 y169 w180 h20 +Left", "Created on " . Creation)
+	AboutGui.Add("Text", "x12 y199 w190 h20 +Left", "Phone: " . Contact)
+	AboutGui.Add("Text", "x212 y199 w180 h20 +Left", "Email: " . Email)
+	ogcButtonOK := AboutGui.Add("Button", "x292 y229 w100 h30", "OK")
+	ogcButtonOK.OnEvent("Click", button_close(AboutGui))
+	AboutGui.Title := "About"
+	AboutGui.Show("x127 y87 h276 w410")
 	Return
 }
 
@@ -216,8 +187,9 @@ AboutPage()
 ; ===================================================================================
 ; Splash GUI
 ; ===================================================================================
-; REMOVED: SplashImageGUI(Picture, X, Y, Duration, Transparent := true)
+SplashImageGUI(Picture, X, Y, Duration, Transparent := true)
 {
+
 	XPT99 := Gui()
 	XPT99.MarginX := "0", XPT99.MarginY := "0"
 	XPT99.Add("Picture", , Picture)
@@ -252,7 +224,7 @@ TrayMenu()
 ; 	Menu, Tray, Add , R&eload, Reeload 											; OPTION - reload script button
 ; 	Menu, Tray, Add 															; Adds a divider
 ; 	Menu, Tray, Add , E&xit, ButtonExit 										; OPTION - Exits the App
-; 	Return
+Return
 }
 
 
@@ -261,8 +233,8 @@ TrayMenu()
 ; ===================================================================================
 CurrentTime()
 {
-CurrentDateTime := FormatTime(, "ddMMyy") 											; Prepare the DATE as DDMMYY
-SendInput(CurrentDateTime) 													; Sends todays date DDMMYY
+CurrentDateTime := FormatTime(, "ddMMyy")												; Prepare the DATE as DDMMYY
+SendEvent(CurrentDateTime) 													; Sends todays date DDMMYY
 return
 }
 
@@ -336,7 +308,7 @@ ClickCut()
 ; ===================================================================================	
 PassTypePC()
 {
-SendInput("mikebrown")
+SendEvent("mikebrown")
 return
 }
 
@@ -356,12 +328,19 @@ return
 ; ===================================================================================
 CRMDate()
 {
-CRMTime := FormatTime(, "dd.MM.yy HH:mm")		; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
-SendInput(CRMTime)
+CRMTime := FormatTime(, "dd-MM-yy hh:mm")			; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
+SendEvent(CRMTime)
 return
 }
 
-
+; ===================================================================================
+; Button events
+; ===================================================================================
+button_close(guiname)
+{
+	guiname.Destroy() ;
+	return ;
+}
 ; ===================================================================================
 ; End
 ; ===================================================================================
