@@ -328,7 +328,7 @@ return
 ; ===================================================================================
 CRMDate()
 {
-CRMTime := FormatTime(, "dd-MM-yy hh:mm")			; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
+CRMTime := FormatTime("T12", "dd-MM-yy hh:mm")			; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
 SendEvent(CRMTime)
 return
 }
