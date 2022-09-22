@@ -118,7 +118,8 @@ return
 
 ^$F12::				; Ctrl+F12	
 {
-MagicCombo()													;- Copies the highlighted text, opens 3CX Broswer Extension and dials it
+;MagicCombo()	
+AboutPage()												;- Copies the highlighted text, opens 3CX Broswer Extension and dials it
 return
 } 
 

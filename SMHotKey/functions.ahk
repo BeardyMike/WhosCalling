@@ -165,17 +165,17 @@ AboutPage()
 	Creation := IniRead("data.ini", "Version", "Creation")								; Reads the Creation value from the data.ini
 	Contact := IniRead("data.ini", "Version", "Contact")								; Reads the Contact value from the data.ini
 	Email := IniRead("data.ini", "Version", "Email")									; Reads the Email Value from the data.ini
-	AboutGui.Add("Picture", "x12 y9 w150 h150", "C:\AHK\splash.png")
+	AboutGui.Add("Picture", "x12 y9 w150 h150", "splash.png")
 	AboutGui := Gui()
 	AboutGui.SetFont("s14", "Verdana")
 	AboutGui.Add("Text", "x172 y49 w190 h70 +Left", "Sound Marketing Account Manager Hotkey Application")
 	AboutGui.SetFont("s6", "Verdana")
-	AboutGui.Add("Text", "x12 y249 w140 h10 +Left", "Software version " . SMVersion)
+	AboutGui.Add("Text", "x12 y249 w140 h10 +Left", "Software version " . SMVersion )
 	AboutGui.SetFont("s10", "Verdana")
-	AboutGui.Add("Text", "x12 y169 w190 h20 +Left", "Created by " . Author)
-	AboutGui.Add("Text", "x212 y169 w180 h20 +Left", "Created on " . Creation)
-	AboutGui.Add("Text", "x12 y199 w190 h20 +Left", "Phone: " . Contact)
-	AboutGui.Add("Text", "x212 y199 w180 h20 +Left", "Email: " . Email)
+	AboutGui.Add("Text", "x12 y169 w190 h20 +Left", "Created by " . Author )
+	AboutGui.Add("Text", "x212 y169 w180 h20 +Left", "Created on " . Creation )
+	AboutGui.Add("Text", "x12 y199 w190 h20 +Left", "Phone: " . Contact )
+	AboutGui.Add("Text", "x212 y199 w180 h20 +Left", "Email: " . Email )
 	ogcButtonOK := AboutGui.Add("Button", "x292 y229 w100 h30", "OK")
 	ogcButtonOK.OnEvent("Click", button_close(AboutGui))
 	AboutGui.Title := "About"
@@ -312,8 +312,6 @@ SendEvent("mikebrown")
 return
 }
 
-
-
 ; ===================================================================================
 ; SpeakerWake
 ; ===================================================================================	
@@ -326,9 +324,9 @@ return
 ; ===================================================================================
 ; Quickbase Time Date 
 ; ===================================================================================
-CRMDate()
+CRMDate() ; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54 - 24HR style
 {
-CRMTime := FormatTime("T12", "dd-MM-yy hh:mm")			; Prepare the DATE as dd-mm-yy hh:mm eg 21-07-22 09:54
+CRMTime := FormatTime("T12", "dd-MM-yy hh:mm")
 SendEvent(CRMTime)
 return
 }

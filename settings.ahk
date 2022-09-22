@@ -36,6 +36,7 @@ savehover = media\gui assets\Save hover.png
 savenohover = media\gui assets\Save no hover.png
 
 
+
 ; ===================================================================================   
 ; Settings GUI
 ; ===================================================================================   
@@ -56,7 +57,7 @@ Gui Add, Picture, vQuickBase x654 y388 w72 h97 +BackgroundTrans, %quickbasecolou
 Gui Add, Picture, gClose hWndMyclose vMyclose x960 y23 w17 h17 +BackgroundTrans, %closebutton%					;	this is the normal	close 		button
 Gui Add, Picture, gSave hWndMysave vMysave x456 y649 w86 h33, %savenohover%										;	this is the grey 	save 		button
 Gui Add, Picture, hWndMynosave vMynosave x456 y649 w86 h33, %savehover%											;	this is the colour 	save		button
-Gui Add, Picture, x29 y654 w33 h23 +BackgroundTrans, D:\AHK\SoundM Whos Calling\Gui Assets\hotkey logo.png		;	this is the logo
+Gui Add, Picture, x29 y654 w33 h23 +BackgroundTrans, media\gui assets\hotkey logo.png		;	this is the logo
 Gui +LastFound
 WinSet, Region, 0-0 w1000 h700 R30-30, 
 OnMessage(0x201, "WM_LBUTTONDOWN")

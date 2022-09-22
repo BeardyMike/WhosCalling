@@ -1,4 +1,4 @@
-; updated for v0.8.5 HeartyHampster
+; updated for v0.8.6 HeartyHampster
 ; ===================================================================================
 ; Startup Code
 ; ===================================================================================
@@ -34,15 +34,6 @@ IniRead, ActivatedStatus, data\settings.ini, appdata, AuthenticationToken
 
 run, splashscreen\SplashScreen.exe
 
-; if ActivatedStatus = 1
-; {
-; SplashImage, media\Splash.png, B                                                            ; loads the splash image, it is turned off after the tray menu and other items have loaded.
-; }
-; else if ActivatedStatus = 0
-; {
-; SplashImage, media\Not Activated.png, B                                                     ; loads the Not Activated splash image, it is turned off after the tray menu and other items have loaded.
-; }
-
 ; ===================================================================================
 ; Tray Menu
 ; ===================================================================================
@@ -70,36 +61,6 @@ else
 
     }          
 
-; Original TrayMenu
-; Menu, Tray, Icon, media\Logo.ico, 1                             ; adds the logo
-; Menu, Tray, NoStandard,                                         ; removes the standard AHK menu items
-; Menu, Tray, Add, Activated                                      ; adds the activated menu item
-; Menu, Tray, Add                                                 ; separator
-; Menu, Tray, Add, About                                          ; adds the about menu item
-; Menu, Tray, Add                                                 ; separator
-; Menu, Tray, Add, Settings                                       ; adds the Settings menu item
-; Menu, Tray, Add, Exit                                           ; add an exit button
-
-
-; ===================================================================================
-; Activation Checks
-; ===================================================================================
-
-; if ActivatedStatus = 1
-; {
-; sleep, 500
-; SplashImage, Off
-; }
-; else if ActivatedStatus = 0
-; {
-; sleep, 3000
-; SplashImage, Off
-; }
-
-
-; TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","False","True")
-; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.exe</LaunchApplicationExecutablePath>")
-; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
 		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchExternalApplication>True</LaunchExternalApplication>")
 		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationExecutablePath>" A_ScriptDir "\SearchApplet.exe</LaunchApplicationExecutablePath>")
 		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationParameters>%CallerNumber%</LaunchApplicationParameters>")
@@ -120,19 +81,19 @@ return
 SMHotKeyHelpFunction()
 {
 	Gui, 3:New,, Help Box,
-	Gui, 3:Font, s12, Verdana
-	Gui, 3:Add, Text,, Win+Z - Initials and CurrentDate.	
-	Gui, 3:Add, Text,, Ctrl+Shift+Z - CurrentDate.
-	Gui, 3:Add, Text,, Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.
-	Gui, 3:Add, Text,, Ctrl+Shift+V - Activate window under mouse cursor, click, paste.
-	Gui, 3:Add, Text,, Ctrl+Alt+V - Tabs to next entry, then pastes, useful when checking VA invoices.
-	Gui, 3:Add, Text,, Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.
-	Gui, 3:Add, Text,, Ctrl+Shift+F12 - Change USER initials.
-	Gui, 3:Add, Text,, Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the clipboard.
-	Gui, 3:Add, Text,, Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.
-	Gui, 3:Add, Text,, Ctrl+F7	- Select all items, delete them, then move back one folder.
+	Gui, 3:Font, s10, Verdana
+	Gui, 3:Add, Text,, Win+Z 				- Initials and CurrentDate.	
+	Gui, 3:Add, Text,, Ctrl+Shift+Z 			- CurrentDate.
+	Gui, 3:Add, Text,, Ctrl+Shift+C 			- Ultra Copy
+	Gui, 3:Add, Text,, Ctrl+Shift+V 			- Ultra Paste
+	Gui, 3:Add, Text,, Ctrl+Alt+V 			- Tabs to next entry, then pastes, useful when checking VA invoices.
+	Gui, 3:Add, Text,, Ctrl+Shift+F1 or F2 or F3 	- Allows you to save up to 3 banks of text.
+	Gui, 3:Add, Text,, Ctrl+Shift+F12 			- Change USER initials.
+	Gui, 3:Add, Text,, Ctrl+Shift+0 		- Types the current date and time DD-MM-YY HH:MM
+	Gui, 3:Add, Text,, Ctrl+Shift+Q 			- Goldmine Pending speedy tool, needs TextBank1 to have data in it.
+	Gui, 3:Add, Text,, Ctrl+F7				- Select all items, delete them, then move back one folder.
 	Gui, 3:Add, Button,  w80, &OK
-	Gui, 3:Show,, SMHotKey Help
+	Gui, 3:Show,, Shortcuts
 	return
 }
 
@@ -148,7 +109,7 @@ SMHotKeyAboutPage()
 	Gui, 4:Add, Text, x172 y49 w190 h70 +Left, Sound Marketing Account Manager Hotkey Application
 	Gui, 4:Font, s6, Verdana
 	Gui, 4:Add, Text, x12 y249 w140 h10 +Left, Software version %SMVersion%
-	Gui, 4:Font, s10, Verdana
+	Gui, 4:Font, s9, Verdana
 	Gui, 4:Add, Text, x12 y169 w190 h20 +Left, Created by %Author%
 	Gui, 4:Add, Text, x212 y169 w180 h20 +Left, Updated on %Updated%
 	Gui, 4:Add, Text, x12 y199 w190 h20 +Left, Phone: %Contact%
@@ -241,9 +202,6 @@ ExitFromApp() ;
 {
 	Process, Close, SMHotKey.exe
 	Process, Close, 3CXWin8Phone.exe
-; TF_ReplaceInLines("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","12","12","True","False") ; turns off the 3CX intergration
-; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","13","13","    <LaunchApplicationExecutablePath> </LaunchApplicationExecutablePath>")
-; TF_ReplaceLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","14","14","    <LaunchApplicationParameters> </LaunchApplicationParameters>")
 
 		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchExternalApplication>False</LaunchExternalApplication>")
 		TF_InsertLine("!" A_AppData "\3CXPhone for Windows\3CXPhone.xml","77",0,"	<LaunchApplicationExecutablePath></LaunchApplicationExecutablePath>")
@@ -257,6 +215,5 @@ ExitFromApp() ;
 ; End
 ; ===================================================================================
 
-#+q:: ; win+shift+q
 exit:
 ExitFromApp()
