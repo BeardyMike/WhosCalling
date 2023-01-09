@@ -1,4 +1,4 @@
-﻿; updated for v0.8.4 HeartyHampster
+﻿; updated for v0.8.5 HeartyHampster
 ; ===================================================================================
 ; This is the SOUNDMARKETING Account Manager Hotkey application
 ; ===================================================================================
@@ -9,7 +9,7 @@ SetWorkingDir(A_ScriptDir) 									            ; Ensures a consistent starting 
 #SingleInstance force 											        ; Prevents mulitple instances from being run at the same time.
 #NoTrayIcon
 #Include functions.ahk
-; SetTimer(SpeakerWaker,600000)
+ SetTimer(SpeakerWaker, 600000)
 
 ; ===================================================================================
 ; VARIABLES
@@ -25,11 +25,11 @@ USERDate := Initials . FormatTime(, "ddMMyy")							    ; example MB230915
 ; Commands
 ; ===================================================================================
 
-; SpeakerWaker()		; autoloops	when SetTimer above is enabled	- plays a .5sec 18kHz tone every 10 mins to keep speakers awake. Should be inaudible to humans
-; { 
-;     SpeakerWake()
-;     return
-; }
+ SpeakerWaker()		; autoloops	when SetTimer above is enabled	- plays a .5sec 18kHz tone every 10 mins to keep speakers awake. Should be inaudible to humans
+{ 
+    SpeakerWake()
+    return
+}
 
 +^$F1::   			; Ctrl+Shift+F1 							- Saves text into TextBank1
 {
@@ -79,6 +79,7 @@ UltraPaste()
 return
 } 
 
+$F13::
 #z::				; Win+Z 									- Initials and the CurrentDate e.g. MB010120
 {
 InitialsDate()
@@ -116,12 +117,6 @@ MessagePaster3()												;- Types out the contents of TextBank1 in a human ma
 return
 } 
 
-^$F12::				; Ctrl+F12	
-{
-;MagicCombo()	
-AboutPage()												;- Copies the highlighted text, opens 3CX Broswer Extension and dials it
-return
-} 
 
 !4::				; Alt+4										- Click, then Cut
 {
@@ -135,7 +130,8 @@ ClickPaste()
 return
 } 
 
-^+0::               ; Ctrl+Shift+0                              - Quickbase Action Dater
+^$F13::             ; Shift +   F13
++^0::               ; Ctrl  +   Shift   +   0                   - Quickbase Action Dater
 {
 CRMDate()
 return

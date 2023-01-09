@@ -1,7 +1,15 @@
 =========
 Changelog
 =========
-v0.8 HeartyHampster
+v0.8.7  HeartyHampster
+1- Added support for the OneKey.
+2- Added the updater function - still in development
+3- working in DPI scaling for windows 10 and 11
+4- .EXEs are all updated to the latest version
+5- re-enabled the speakerwave function
+6- moved to AHKv2 for the SMHOTKEY app
+
+v0.8    HeartyHampster
 1-  Added a new settings menu that replaces the tray menu options for user preferences
 2-  logging can now be enabled and disabled
 3-  splash screen now shows different verion if not activated
@@ -12,7 +20,7 @@ v0.8 HeartyHampster
 8-  cleaned up the traymenu user preferences options as most are no longer needed
 9-  splash video added
 
-v0.7 GloomyGoose
+v0.7    GloomyGoose
 1-  fixed log function, errant back slash in the directory
 2-  fixed spelling mistakes in the code comments
 3-  simplified the TimeString variable - hh:mm:ss' on 'dd-MMM-yyyy
@@ -32,32 +40,32 @@ v0.7 GloomyGoose
 17- 3CX Windows App intergration improved
 
 
-v0.6 FanaticalFerret
+v0.6    FanaticalFerret
 1-  added a calculation to determine if the call is internal or external.
 2-  internal calls no longer trigger the web search function, they just log the call.
 3-  cleaned up the search applets boot code, this has increased app responisveness significantly
 
-v0.5 EagerEagle
+v0.5    EagerEagle
 1-  added a hidden duplicate of the log just incase users try to manipulate the log files.
 2-  simplified the log function and added global varaibles to it to reduce duplicate variables inside of functions
 3-  icon made from the logo file, added file to media folder
 
 
-v0.4 DancingDragonfly
+v0.4    DancingDragonfly
 1-  added a README file for new users to refer to.
 2-  added a logging file to keep track of who's calling and the date of the call.
 
 
-v0.3 CuriousCheetah
+v0.3    CuriousCheetah
 1-  functions are now split away into a seperated file to keep the search applet as light wieght as possible
 2-  logo finalised and added to the media folder
 
 
-v0.2 BraveBadger
+v0.2    BraveBadger
 1-  simplified the web search function
 2-  made common functions to reduce dupelicated processes
 
 
-v0.1 AgelessAlbatross
+v0.1    AgelessAlbatross
 1-  applet can now catch and store Windows Launch Parameters from 3CX windows app
 2-  a basic google search is run using the phone number passed from the 3CX WLP
