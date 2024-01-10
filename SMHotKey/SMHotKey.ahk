@@ -57,7 +57,7 @@ return
 
 ^!v::				; Ctrl+Alt+V 								- VoiceArtist Tab'n'Paste
 {
-VATabnPaste()
+QuickBaseOnboarding()
 return
 }
 

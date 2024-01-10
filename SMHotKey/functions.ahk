@@ -80,11 +80,68 @@ GetPixelColour()
 
 
 ; ===================================================================================
-; Tab n Paste
+; Quickbase Onboarding Action
 ; ===================================================================================
-VATabnPaste()
+QuickBaseOnboarding()
 {
-	Send("{Tab up}{Tab down}{Tab up}{Right up}{Right down}{Right up}^v") 				; Tab then Right Arrow then Paste
+	; this code scrubs through the CRM Onboarding page and fills in the data, inputting the date, and setting the status to complete.
+	CoordMode "Mouse", "Window"
+	CRMTime := FormatTime("T12", "dd-MM-yy hh:mm")
+	Send("{Blind}{Shift Up}{Ctrl Up}{Alt Up}{LWin Up}")
+	Send("{WheelUp 10}")
+	Sleep 50
+	Send("{Tab 10}")
+	Sleep 50
+	Send("^a")
+	Send("{Blind}{Shift Up}{Ctrl Up}{Alt Up}{LWin Up}")
+	Send("{Right}")
+	Send("{Enter}")
+	Send("{Enter}")
+	Send("Complete by Mike - " . CRMTime)
+	Sleep 50
+	Click 202, 925
+	Sleep 50
+	SendEvent(CRMTime)
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	Send("Just Notes")
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	Send("Done")
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	Send("Done")
+	Sleep 50
+	Click 67, 637
+	Sleep 50
+	Send("{Tab 3}")
+	Sleep 50
+	Send("c")
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	Send("{Enter}")
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	SendEvent(CRMTime)
+	Sleep 50
+	Send("{Tab 2}")
+	Sleep 50
+	Send("Mike Brown")
+	Sleep 50
+	Send("{Down}")
+	Sleep 50
+	Send("{Enter}")
+	Sleep 50
+	Send("{Tab}")
+	Sleep 50
+	Send("Enter")
+	Sleep 50
+	Send(" ")
 	return
 }
 
@@ -133,26 +190,26 @@ InitialsDate()
 ; ===================================================================================
 ; Help GUI
 ; ===================================================================================
-HelpFunction()
-{
-	HelpGui := Gui()
-	HelpGui.New(, "Help Box")
-	HelpGui.SetFont("s12", "Verdana")
-	HelpGui.Add("Text", , "Win+Z - Initials and CurrentDate.")
-	HelpGui.Add("Text", , "Ctrl+Shift+Z - CurrentDate.")
-	HelpGui.Add("Text", , "Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.")
-	HelpGui.Add("Text", , "Ctrl+Shift+V - Activate window under mouse cursor, click, paste.")
-	HelpGui.Add("Text", , "Ctrl+Alt+V - Tabs to next entry, then pastes, useful when checking VA invoices.")
-	HelpGui.Add("Text", , "Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.")
-	HelpGui.Add("Text", , "Ctrl+Shift+F12 - Change USER initials.")
-	HelpGui.Add("Text", , "Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the A_Clipboard.")
-	HelpGui.Add("Text", , "Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.")
-	HelpGui.Add("Text", , "Ctrl+F7	- Select all items, delete them, then move back one folder.")
-	ogcButtonOK := HelpGui.Add("Button", "Default w80", "OK")
-	ogcButtonOK.OnEvent("Click", button_close(HelpGui))
-	HelpGui.Show()
-	return
-}
+; HelpFunction()
+; {
+; 	HelpGui := Gui()
+; 	HelpGui.New(, "Help Box")
+; 	HelpGui.SetFont("s12", "Verdana")
+; 	HelpGui.Add("Text", , "Win+Z - Initials and CurrentDate.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+Z - CurrentDate.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+C - activate window under mouse cursor, triple click, copy.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+V - Activate window under mouse cursor, click, paste.")
+; 	HelpGui.Add("Text", , "Ctrl+Alt+V - Use on the CRM Onboarding Page, to auto fill data.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+F1 or F2 or F3 - Allows you to save up to 3 banks of text , dont go mad with it.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+F12 - Change USER initials.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+Middle Mouse Click - Shows Pixel Colour, and lets you choose to copy it to the A_Clipboard.")
+; 	HelpGui.Add("Text", , "Ctrl+Shift+Q - Goldmine Pending speedy tool, needs TextBank1 to have data in it.")
+; 	HelpGui.Add("Text", , "Ctrl+F7	- Select all items, delete them, then move back one folder.")
+; 	ogcButtonOK := HelpGui.Add("Button", "Default w80", "OK")
+; 	ogcButtonOK.OnEvent("Click", button_close(HelpGui))
+; 	HelpGui.Show()
+; 	return
+; }
 
 
 ; ===================================================================================

@@ -61,11 +61,10 @@ SMHotKeyHelpFunction()
 	Gui, 3:Add, Text,, Ctrl+Shift+Z 			- CurrentDate.
 	Gui, 3:Add, Text,, Ctrl+Shift+C 			- Ultra Copy
 	Gui, 3:Add, Text,, Ctrl+Shift+V 			- Ultra Paste
-	Gui, 3:Add, Text,, Ctrl+Alt+V 			- Tabs to next entry, then pastes, useful when checking VA invoices.
+	Gui, 3:Add, Text,, Ctrl+Alt+V 				- Use on the CRM Onboarding Page, to auto fill data.
 	Gui, 3:Add, Text,, Ctrl+Shift+F1 or F2 or F3 	- Allows you to save up to 3 banks of text.
 	Gui, 3:Add, Text,, Ctrl+Shift+F12 			- Change USER initials.
 	Gui, 3:Add, Text,, Ctrl+Shift+0 		- Types the current date and time DD-MM-YY HH:MM
-	Gui, 3:Add, Text,, Ctrl+Shift+Q 			- Goldmine Pending speedy tool, needs TextBank1 to have data in it.
 	Gui, 3:Add, Text,, Ctrl+F7				- Select all items, delete them, then move back one folder.
 	Gui, 3:Add, Button,  w80, &OK
 	Gui, 3:Show,, Shortcuts
