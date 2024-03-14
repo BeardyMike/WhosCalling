@@ -55,7 +55,7 @@ GetPixelColour()
 return
 }
 
-^!v::				; Ctrl+Alt+V 								- VoiceArtist Tab'n'Paste
+^!v::				; Ctrl+Alt+V 								- QuickBase Onboarding
 {
 QuickBaseOnboarding()
 return
